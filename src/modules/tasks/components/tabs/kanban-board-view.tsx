@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react';
 import { columns, tasks } from '../../constants';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { TaskCard } from '../task-card';
+import { TaskCard } from '../common/task-card';
 
 export const KanbanBoardView = () => {
   return (

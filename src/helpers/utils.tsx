@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUp, Minus } from 'lucide-react';
+import { AlertTriangle, ArrowDown, ArrowUp, Bug, CheckCircle2, Minus, XCircle } from 'lucide-react';
 
 export function isOverdue(dueDate: string) {
   return new Date(dueDate) < new Date();
@@ -7,13 +7,13 @@ export function isOverdue(dueDate: string) {
 export function getSeverityColor(severity: string) {
   switch (severity) {
     case 'High':
-      return 'bg-red-100 text-red-800 border-red-200';
+      return 'destructive';
     case 'Medium':
-      return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      return 'default';
     case 'Low':
-      return 'bg-green-100 text-green-800 border-green-200';
+      return 'secondary';
     default:
-      return 'bg-gray-100 text-gray-800 border-gray-200';
+      return 'secondary';
   }
 }
 
@@ -44,5 +44,28 @@ export function getPriorityIcon(priority: string) {
       return <ArrowDown className="h-4 w-4 text-green-500" />;
     default:
       return <Minus className="h-4 w-4 text-gray-500" />;
+  }
+}
+
+export function getRoleColor(role: string) {
+  if (role.includes('Senior') || role.includes('Lead')) return 'default';
+
+  if (role.includes('Manager')) return 'secondary';
+
+  return 'outline';
+}
+
+export function getStatusIcon(status: string) {
+  switch (status) {
+    case 'Open':
+      return <Bug className="h-4 w-4 text-red-500" />;
+    case 'In Progress':
+      return <AlertTriangle className="h-4 w-4 text-orange-500" />;
+    case 'Resolved':
+      return <CheckCircle2 className="h-4 w-4 text-green-500" />;
+    case 'Closed':
+      return <XCircle className="h-4 w-4 text-gray-500" />;
+    default:
+      return <Bug className="h-4 w-4 text-gray-500" />;
   }
 }

@@ -2,7 +2,7 @@ import { CalendarIcon, MoreHorizontal } from 'lucide-react';
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { getPriorityIcon, getSeverityColor, getStatusColor, isOverdue } from '../../utils';
+import { getPriorityIcon, getSeverityColor, getStatusColor, isOverdue } from '@/helpers/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';

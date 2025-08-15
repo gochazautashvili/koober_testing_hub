@@ -13,7 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
-import { getSeverityColor, getStatusColor, getStatusIcon } from '../../helpers';
+import { getSeverityColor, getStatusColor, getStatusIcon } from '@/helpers/utils';
 
 const bugReports = [
   {

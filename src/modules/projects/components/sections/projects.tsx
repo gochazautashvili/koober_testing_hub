@@ -3,9 +3,10 @@ import { FolderOpen, Plus } from 'lucide-react';
 import { Fragment } from 'react';
 
 import { Button } from '@/components/ui/button';
-import { useView } from '../../hooks/use-view';
 import { GridView } from './grid-view';
 import { ListView } from './list-view';
+
+import { useView } from '@/hooks/use-view';
 
 export const Projects = () => {
   const { view } = useView();

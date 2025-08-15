@@ -1,18 +1,18 @@
 'use client';
-import { Grid3X3, List, Plus } from 'lucide-react';
+import { Grid3X3, List } from 'lucide-react';
 
+import { InviteMember } from '../dialogs/invite-member';
 import { Button } from '@/components/ui/button';
-
 import { useView } from '@/hooks/use-view';
 
 export const Header = () => {
-  const { setView, view } = useView();
+  const { view, setView } = useView();
 
   return (
     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Projects (2)</h1>
-        <p className="text-muted-foreground">Manage and track all your development projects</p>
+        <h1 className="text-3xl font-bold tracking-tight">Team Members (7)</h1>
+        <p className="text-muted-foreground">Manage team members and track their performance</p>
       </div>
       <div className="flex items-center gap-2">
         <div className="flex items-center rounded-lg border p-1">
@@ -34,10 +34,7 @@ export const Header = () => {
           </Button>
         </div>
 
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          New Project
-        </Button>
+        <InviteMember />
       </div>
     </div>
   );

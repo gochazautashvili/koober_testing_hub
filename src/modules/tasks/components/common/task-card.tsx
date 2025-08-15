@@ -1,10 +1,10 @@
 import { CalendarIcon, GripVertical, MessageSquare, Paperclip } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { getSeverityColor, isOverdue } from '@/helpers/utils';
 import { Card, CardContent } from '@/components/ui/card';
-import { getSeverityColor, isOverdue } from '../utils';
 import { Badge } from '@/components/ui/badge';
-import { tasks } from '../constants';
+import { tasks } from '../../constants';
 
 export const TaskCard = ({ task }: { task: (typeof tasks)[0] }) => {
   return (

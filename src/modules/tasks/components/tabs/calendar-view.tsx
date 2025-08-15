@@ -2,7 +2,7 @@ import { CalendarIcon } from 'lucide-react';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { getPriorityIcon, isOverdue } from '../../utils';
+import { getPriorityIcon, isOverdue } from '@/helpers/utils';
 import { Calendar } from '@/components/ui/calendar';
 import { tasks } from '../../constants';
 
