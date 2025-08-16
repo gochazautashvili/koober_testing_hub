@@ -20,12 +20,14 @@ export const profile_schema = z.object({
 
   phone: z
     .string()
-    .min(10, { message: 'Phone number must be at least 10 digits.' })
+    .min(7, { message: 'Phone number must be at least 10 digits.' })
     .regex(/^[+]?[(]?[0-9]{1,3}[)]?[-\s.]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,4}[-\s.]?[0-9]{1,9}$/, {
       message: 'Please enter a valid phone number.',
     })
     .optional()
     .or(z.literal('')),
+
+  photo: z.string().optional().or(z.literal('')),
 });
 
 export type IProfileValues = z.infer<typeof profile_schema>;

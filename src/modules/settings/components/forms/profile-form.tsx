@@ -13,10 +13,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 const defaultValues: IProfileValues = {
-  firstName: 'John',
-  lastName: 'Doe',
-  email: 'john.doe@company.com',
-  phone: '+1 (555) 123-4567',
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  photo: '',
 };
 
 export const ProfileForm = () => {
@@ -41,30 +42,37 @@ export const ProfileForm = () => {
     <TabsContent value="general">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          {/* Avatar Section */}
-          <div className="flex items-center gap-4">
-            <Avatar className="h-20 w-20">
-              <AvatarImage src="" />
-              <AvatarFallback>
-                {form.watch('firstName')?.[0]?.toUpperCase() || 'J'}
-                {form.watch('lastName')?.[0]?.toUpperCase() || 'D'}
-              </AvatarFallback>
-            </Avatar>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => document.getElementById('avatar-upload')?.click()}
-                >
-                  <Camera className="mr-2 h-4 w-4" />
-                  Change Photo
-                </Button>
-              </div>
-              <p className="text-muted-foreground text-sm">JPG, PNG or GIF. Max size 2MB.</p>
-            </div>
-          </div>
+          <FormField
+            control={form.control}
+            name="photo"
+            render={() => (
+              <FormItem>
+                <FormControl>
+                  <div className="flex items-center gap-4">
+                    <Avatar className="h-20 w-20">
+                      <AvatarImage src="" />
+                      <AvatarFallback>
+                        {form.watch('firstName')?.[0]?.toUpperCase() || 'J'}
+                        {form.watch('lastName')?.[0]?.toUpperCase() || 'D'}
+                      </AvatarFallback>
+                    </Avatar>
+
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <Button size="sm" type="button" variant="outline">
+                          <Camera className="mr-2 h-4 w-4" />
+                          Change Photo
+                        </Button>
+                      </div>
+
+                      <p className="text-muted-foreground text-sm">JPG, PNG or GIF. Max size 2MB.</p>
+                    </div>
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <Separator />
 
