@@ -9,7 +9,7 @@ import {
   SidebarGroupContent,
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
+import { cn } from '@/library/utils';
 import { usePathname } from 'next/navigation';
 
 const navigation = [

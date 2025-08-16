@@ -1,5 +1,7 @@
-import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
+
+import { CreateTaskModal } from '../dialogs/create-task';
+import { Button } from '@/components/ui/button';
 
 export const Header = () => {
   return (
@@ -8,10 +10,13 @@ export const Header = () => {
         <h1 className="text-3xl font-bold tracking-tight">Tasks</h1>
         <p className="text-muted-foreground">Manage and track development tasks across all projects</p>
       </div>
-      <Button>
-        <Plus className="mr-2 h-4 w-4" />
-        New Task
-      </Button>
+
+      <CreateTaskModal>
+        <Button>
+          <Plus className="mr-2 h-4 w-4" />
+          New Task
+        </Button>
+      </CreateTaskModal>
     </div>
   );
 };

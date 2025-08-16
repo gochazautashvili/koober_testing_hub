@@ -3,6 +3,8 @@ import { Grid3X3, List, Plus } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 
+import { CreateProjectModal } from '../dialogs/create-project';
+
 import { useView } from '@/hooks/use-view';
 
 export const Header = () => {
@@ -34,10 +36,12 @@ export const Header = () => {
           </Button>
         </div>
 
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          New Project
-        </Button>
+        <CreateProjectModal>
+          <Button>
+            <Plus className="mr-2 h-4 w-4" />
+            New Project
+          </Button>
+        </CreateProjectModal>
       </div>
     </div>
   );

@@ -1,7 +1,5 @@
-import { Bug, Calendar, FolderOpen, Plus } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import { formatDate } from 'date-fns';
-
-import { Button } from '@/components/ui/button';
 
 export const Welcome = () => {
   return (
@@ -15,21 +13,6 @@ export const Welcome = () => {
               <span>{formatDate(new Date(), 'EEEE, MMMM do, yyyy')}</span>
             </div>
           </div>
-        </div>
-
-        <div className="flex flex-wrap gap-3">
-          <Button variant="destructive">
-            <Bug className="mr-2 h-4 w-4" />
-            Report Bug
-          </Button>
-          <Button variant="outline">
-            <Plus className="mr-2 h-4 w-4" />
-            Create Task
-          </Button>
-          <Button variant="outline">
-            <FolderOpen className="mr-2 h-4 w-4" />
-            View Projects
-          </Button>
         </div>
       </div>
     </div>

@@ -1,3 +1,5 @@
+import { AlertCircle, Flag } from 'lucide-react';
+
 export const tasks = [
   {
     id: 'TASK-001',
@@ -132,3 +134,31 @@ export const columns = [
   { id: 'In Review', title: 'In Review', color: 'yellow', count: tasks.filter((t) => t.status === 'In Review').length },
   { id: 'Done', title: 'Done', color: 'green', count: tasks.filter((t) => t.status === 'Done').length },
 ];
+
+export const projects = [
+  { id: '1', name: 'Website Redesign', color: 'bg-blue-500' },
+  { id: '2', name: 'Mobile App', color: 'bg-green-500' },
+  { id: '3', name: 'API Integration', color: 'bg-purple-500' },
+  { id: '4', name: 'Database Migration', color: 'bg-orange-500' },
+];
+
+export const teamMembers = [
+  { id: '1', name: 'John Doe', email: 'john@example.com', avatar: '/placeholder.svg?height=32&width=32' },
+  { id: '2', name: 'Jane Smith', email: 'jane@example.com', avatar: '/placeholder.svg?height=32&width=32' },
+  { id: '3', name: 'Mike Johnson', email: 'mike@example.com', avatar: '/placeholder.svg?height=32&width=32' },
+  { id: '4', name: 'Sarah Wilson', email: 'sarah@example.com', avatar: '/placeholder.svg?height=32&width=32' },
+];
+
+export const priorityConfig = {
+  low: { label: 'Low', color: 'bg-gray-500', icon: Flag },
+  medium: { label: 'Medium', color: 'bg-yellow-500', icon: Flag },
+  high: { label: 'High', color: 'bg-orange-500', icon: Flag },
+  critical: { label: 'Critical', color: 'bg-red-500', icon: AlertCircle },
+};
+
+export const severityConfig = {
+  minor: { label: 'Minor', color: 'bg-green-500' },
+  major: { label: 'Major', color: 'bg-yellow-500' },
+  critical: { label: 'Critical', color: 'bg-orange-500' },
+  blocker: { label: 'Blocker', color: 'bg-red-500' },
+};
