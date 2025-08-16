@@ -5,7 +5,7 @@ import { KanbanBoardView } from './kanban-board-view';
 import { CalendarView } from './calendar-view';
 import { TableView } from './table-view';
 
-export const Tabs = () => {
+export const TaskTabs = () => {
   return (
     <MainTabs defaultValue="kanban">
       <TabsList>

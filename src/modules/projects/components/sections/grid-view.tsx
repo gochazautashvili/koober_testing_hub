@@ -1,16 +1,7 @@
-import { MoreHorizontal } from 'lucide-react';
-
-import {
-  DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
-import { Button } from '@/components/ui/button';
+import { ActionsButton } from '../common/actions';
 import { Badge } from '@/components/ui/badge';
 
 const projects = [
@@ -145,18 +136,7 @@ export const GridView = () => {
                   {project.description}
                 </CardDescription>
               </div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm">
-                    <MoreHorizontal className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem>View Details</DropdownMenuItem>
-                  <DropdownMenuItem>Edit Project</DropdownMenuItem>
-                  <DropdownMenuItem>Archive</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <ActionsButton />
             </div>
             <Badge variant={getStatusColor(project.status)} className="w-fit">
               {project.status}

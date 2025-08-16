@@ -1,4 +1,4 @@
-import { CreditCard, DotSquare, Info, LogOut, UserCircle } from 'lucide-react';
+import { DotSquare, Info, LogOut, UserCircle } from 'lucide-react';
 
 import {
   DropdownMenu,
@@ -12,6 +12,7 @@ import {
 
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import Link from 'next/link';
 
 export const Footer = () => {
   return (
@@ -53,17 +54,17 @@ export const Footer = () => {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <UserCircle />
-                Account
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/settings">
+                  <UserCircle />
+                  Account
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Info />
-                Notifications
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/notifications">
+                  <Info />
+                  Notifications
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

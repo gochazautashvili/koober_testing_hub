@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { getPriorityIcon, isOverdue } from '@/helpers/utils';
 import { Calendar } from '@/components/ui/calendar';
-import { tasks } from '../../constants';
+import { tasks } from '@/modules/tasks/constants';
 
 export const CalendarView = () => {
   return (

@@ -1,16 +1,7 @@
-import { MoreHorizontal } from 'lucide-react';
-
-import {
-  DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-} from '@/components/ui/dropdown-menu';
-
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
-import { Button } from '@/components/ui/button';
+import { ActionsButton } from '../common/actions';
 import { Card } from '@/components/ui/card';
 
 const projects = [
@@ -186,18 +177,7 @@ export const ListView = () => {
                 <div className="text-muted-foreground text-sm">{project.lastUpdated}</div>
               </TableCell>
               <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem>View Details</DropdownMenuItem>
-                    <DropdownMenuItem>Edit Project</DropdownMenuItem>
-                    <DropdownMenuItem>Archive</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <ActionsButton />
               </TableCell>
             </TableRow>
           ))}
