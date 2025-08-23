@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -13,6 +14,12 @@ enum user_role {
   admin
   tester
   developer
+}
+
+enum member_role {
+  lead
+  viewer
+  member
 }
 
 enum project_status {
@@ -69,82 +76,72 @@ enum notification_type {
 
 // ==================== MODELS ====================
 
+// TODO: add profession model
+
 model User {
-  id             String    @id @default(cuid())
-  email          String    @unique
-  name           String
-  password       String
-  role           user_role @default(developer)
-  avatar         String?
-  is_active      Boolean   @default(true)
-  email_verified Boolean   @default(false)
-  last_login     DateTime?
-  created_at     DateTime  @default(now())
-  updated_at     DateTime  @updatedAt
+  id        String    @id @default(uuid())
+  email     String    @unique
+  username  String
+  password  String
+  role      user_role @default(developer)
+  avatar    String?
+  is_active Boolean   @default(true)
+
+  last_login DateTime?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
 
   // Relations
-  projects_created   Project[]       @relation("ProjectCreator")
-  project_members    ProjectMember[]
-  tasks_created      Task[]          @relation("TaskCreator")
-  tasks_assigned     Task[]          @relation("TaskAssignee")
-  comments           Comment[]
-  activities         Activity[]
-  notifications      Notification[]  @relation("NotificationRecipient")
-  notifications_sent Notification[]  @relation("NotificationSender")
-  attachments        Attachment[]
+  projects_created Project[] @relation("ProjectCreator")
+  tasks_assigned   Task[]    @relation("TaskAssignee")
+  tasks_created    Task[]    @relation("TaskCreator")
 
-  // Settings
-  notification_settings NotificationSettings?
+  notifications       Notification[]  @relation("NotificationRecipient")
+  notifications_sent  Notification[]  @relation("NotificationSender")
+  project_memberships ProjectMember[]
+  attachments         Attachment[]
+  professions         Profession[]
+  activities          Activity[]
+  comments            Comment[]
+
+  //  Auth Sessions
+  session Session[]
 
   @@index([email])
   @@index([role])
   @@map("users")
 }
 
-model NotificationSettings {
-  id      String @id @default(cuid())
-  user_id String @unique
-  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  userId    String
 
-  // Email notifications
-  email_on_task_assigned  Boolean @default(true)
-  email_on_task_completed Boolean @default(true)
-  email_on_comment        Boolean @default(true)
-  email_on_mention        Boolean @default(true)
-  email_on_project_invite Boolean @default(true)
-  email_daily_digest      Boolean @default(false)
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  // In-app notifications
-  push_notifications    Boolean @default(true)
-  desktop_notifications Boolean @default(false)
+  @@map("sessions")
+}
 
-  // Quiet hours
-  quiet_hours_enabled Boolean @default(false)
-  quiet_hours_start   String? // "22:00"
-  quiet_hours_end     String? // "08:00"
+model Project {
+  id          String         @id @default(uuid())
+  name        String
+  description String?
+  status      project_status @default(active)
+
+  start_date DateTime
+  end_date   DateTime?
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  @@map("notification_settings")
-}
-
-model Project {
-  id            String         @id @default(cuid())
-  name          String
-  description   String?
-  start_date    DateTime
-  end_date      DateTime?
-  status        project_status @default(active)
   created_by_id String
-  created_by    User           @relation("ProjectCreator", fields: [created_by_id], references: [id])
-  created_at    DateTime       @default(now())
-  updated_at    DateTime       @updatedAt
+  created_by    User   @relation("ProjectCreator", fields: [created_by_id], references: [id])
 
   // Relations
   members    ProjectMember[]
-  tasks      Task[]
   activities Activity[]
+  tasks      Task[]
 
   @@index([status])
   @@index([created_by_id])
@@ -152,13 +149,18 @@ model Project {
 }
 
 model ProjectMember {
-  id         String   @id @default(cuid())
+  id String @id @default(uuid())
+
   project_id String
-  project    Project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
-  user_id    String
-  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  role       String   @default("member") // lead, member, viewer
-  joined_at  DateTime @default(now())
+  project    Project @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  role      member_role @default(member)
+  joined_at DateTime    @default(now())
+
+  professions Profession[]
 
   @@unique([project_id, user_id])
   @@index([project_id])
@@ -167,25 +169,28 @@ model ProjectMember {
 }
 
 model Task {
-  id           String        @id @default(cuid())
-  title        String
-  description  String        @db.Text
-  severity     task_severity @default(medium)
-  type         task_type     @default(bug)
-  status       task_status   @default(open)
+  id String @id @default(uuid())
+
+  title       String
+  description String        @db.Text
+  severity    task_severity @default(medium)
+  type        task_type     @default(bug)
+  status      task_status   @default(open)
+  order       Int           @default(autoincrement())
+  task_number Int           @unique
+
   due_date     DateTime?
   completed_at DateTime?
 
   // Relations
-  project_id     String
-  project        Project @relation(fields: [project_id], references: [id], onDelete: Cascade)
-  created_by_id  String
-  created_by     User    @relation("TaskCreator", fields: [created_by_id], references: [id])
+  project_id String
+  project    Project @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  created_by_id String
+  created_by    User   @relation("TaskCreator", fields: [created_by_id], references: [id])
+
   assigned_to_id String?
   assigned_to    User?   @relation("TaskAssignee", fields: [assigned_to_id], references: [id])
-
-  // Task number per project
-  task_number Int
 
   // Additional fields
   estimated_hours Float?
@@ -199,37 +204,44 @@ model Task {
   attachments Attachment[]
   activities  Activity[]
   subtasks    Subtask[]
-  tags        TaskTag[]
 
   @@unique([project_id, task_number])
-  @@index([project_id])
   @@index([assigned_to_id])
-  @@index([status])
+  @@index([project_id])
   @@index([severity])
+  @@index([status])
   @@map("tasks")
 }
 
 model Subtask {
-  id           String   @id @default(cuid())
-  task_id      String
-  task         Task     @relation(fields: [task_id], references: [id], onDelete: Cascade)
+  id String @id @default(uuid())
+
+  task_id String
+  task    Task   @relation(fields: [task_id], references: [id], onDelete: Cascade)
+
   title        String
-  is_completed Boolean  @default(false)
-  order        Int
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
+  description  String  @db.Text
+  is_completed Boolean @default(false)
+  order        Int     @default(autoincrement())
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@index([task_id])
   @@map("subtasks")
 }
 
 model Comment {
-  id        String    @id @default(cuid())
-  content   String    @db.Text
-  task_id   String
-  task      Task      @relation(fields: [task_id], references: [id], onDelete: Cascade)
+  id String @id @default(uuid())
+
+  content String @db.Text
+
+  task_id String
+  task    Task   @relation(fields: [task_id], references: [id], onDelete: Cascade)
+
   author_id String
-  author    User      @relation(fields: [author_id], references: [id])
+  author    User   @relation(fields: [author_id], references: [id])
+
   parent_id String?
   parent    Comment?  @relation("CommentReplies", fields: [parent_id], references: [id])
   replies   Comment[] @relation("CommentReplies")
@@ -246,18 +258,17 @@ model Comment {
 }
 
 model Attachment {
-  id            String  @id @default(cuid())
-  filename      String
-  filesize      Int // in bytes
-  mimetype      String
-  url           String
-  thumbnail_url String?
+  id String @id @default(uuid())
+
+  public_key String @unique
+  url        String
 
   // Relations
-  task_id        String?
-  task           Task?   @relation(fields: [task_id], references: [id], onDelete: Cascade)
+  task_id String?
+  task    Task?   @relation(fields: [task_id], references: [id], onDelete: Cascade)
+
   uploaded_by_id String
-  uploaded_by    User    @relation(fields: [uploaded_by_id], references: [id])
+  uploaded_by    User   @relation(fields: [uploaded_by_id], references: [id])
 
   created_at DateTime @default(now())
 
@@ -266,35 +277,8 @@ model Attachment {
   @@map("attachments")
 }
 
-model Tag {
-  id          String  @id @default(cuid())
-  name        String  @unique
-  color       String  @default("#6B7280")
-  description String?
-
-  tasks TaskTag[]
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  @@map("tags")
-}
-
-model TaskTag {
-  id      String @id @default(cuid())
-  task_id String
-  task    Task   @relation(fields: [task_id], references: [id], onDelete: Cascade)
-  tag_id  String
-  tag     Tag    @relation(fields: [tag_id], references: [id], onDelete: Cascade)
-
-  @@unique([task_id, tag_id])
-  @@index([task_id])
-  @@index([tag_id])
-  @@map("task_tags")
-}
-
 model Activity {
-  id          String        @id @default(cuid())
+  id          String        @id @default(uuid())
   type        activity_type
   description String
   metadata    Json? // Store additional data like old/new values
@@ -318,7 +302,7 @@ model Activity {
 }
 
 model Notification {
-  id       String            @id @default(cuid())
+  id       String            @id @default(uuid())
   type     notification_type
   title    String
   message  String
@@ -340,13 +324,31 @@ model Notification {
   @@map("notifications")
 }
 
+model Profession {
+  id String @id @default(uuid())
+
+  name        String  @unique
+  description String?
+
+  project_member ProjectMember[]
+  user           User[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([id])
+  @@index([name])
+  @@map("professions")
+}
+
 // ==================== TEMPLATE MODELS ====================
 
 model BugReportTemplate {
-  id          String         @id @default(cuid())
+  id          String  @id @default(uuid())
   name        String
   description String?
-  content     String         @db.Text
+  content     String  @db.Text
+
   severity    task_severity?
   type        task_type?
   tags        String[]
@@ -363,7 +365,7 @@ model BugReportTemplate {
 // ==================== ANALYTICS MODELS ====================
 
 model DailyStats {
-  id String @id @default(cuid())
+  id String @id @default(uuid())
 
   date DateTime @unique
 

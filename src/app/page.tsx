@@ -1,5 +1,11 @@
 import { redirect } from 'next/navigation';
 
-export default function Home() {
-  return redirect('/dashboard');
+import { getAuth } from '@/auth/helpers';
+
+export default async function Home() {
+  const { user, session } = await getAuth();
+
+  if (!user || !session) redirect('/auth');
+
+  redirect('/dashboard');
 }

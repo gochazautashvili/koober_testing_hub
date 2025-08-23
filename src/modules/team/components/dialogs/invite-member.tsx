@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { Mail } from 'lucide-react';
+import { useForm, useWatch } from 'react-hook-form';
+import { Mail, X } from 'lucide-react';
 
 import {
   Dialog,
@@ -13,12 +13,15 @@ import {
 
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
-import { IInviteMemberValues, invite_member_schema } from '../../services/validations';
-
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+
+import { ProfessionsSelector } from '@/components/data/profession-selectors';
+import { LoadingButton } from '@/components/common/loading-button';
+
+import { IInviteMemberValues, invite_member_schema } from '../../services/validations';
+import { useInviteMember } from '../../hooks/mutations/use-invite-member';
 
 const projects = [
   { id: 1, name: 'E-commerce Platform' },
@@ -29,21 +32,42 @@ const projects = [
 ];
 
 export const InviteMember = () => {
+  const { mutate, isPending } = useInviteMember();
+
   const form = useForm<IInviteMemberValues>({
     resolver: zodResolver(invite_member_schema),
     defaultValues: {
-      role: '',
       email: '',
-      project: '',
-      fullName: '',
+      username: '',
+      professions: [],
+      role: 'developer',
+      hasProject: false,
+      projectId: undefined,
+      member_role: undefined,
+      member_professions: undefined,
       message: "Welcome to our team! We're excited to have you join us...",
     },
   });
 
   const onSubmit = (values: IInviteMemberValues) => {
-    console.log('Form submitted with values:', values);
-    form.reset();
+    mutate(values);
   };
+
+  const handleProjectChange = (projectId: string | undefined) => {
+    if (projectId) {
+      // Enable project fields
+      form.setValue('hasProject', true);
+      form.setValue('projectId', projectId);
+    } else {
+      // Disable and clear project fields
+      form.setValue('hasProject', false);
+      form.setValue('projectId', undefined);
+      form.setValue('member_role', undefined);
+      form.setValue('member_professions', undefined);
+    }
+  };
+
+  const isProjectSelected = useWatch({ control: form.control, name: 'hasProject' });
 
   return (
     <Dialog>
@@ -64,7 +88,7 @@ export const InviteMember = () => {
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name="fullName"
+                name="username"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Full Name</FormLabel>
@@ -108,8 +132,6 @@ export const InviteMember = () => {
                         <SelectItem value="admin">Admin</SelectItem>
                         <SelectItem value="developer">Developer</SelectItem>
                         <SelectItem value="tester">Tester</SelectItem>
-                        <SelectItem value="designer">Designer</SelectItem>
-                        <SelectItem value="manager">Manager</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -118,12 +140,12 @@ export const InviteMember = () => {
               />
 
               <FormField
-                name="project"
+                name="projectId"
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Project Assignment</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select onValueChange={handleProjectChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select project" />
@@ -144,8 +166,30 @@ export const InviteMember = () => {
             </div>
 
             <FormField
-              name="message"
               control={form.control}
+              name="professions"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Profession</FormLabel>
+                  <SelectedProfessionView onChange={field.onChange} values={field.value || []} />
+                  <Select onValueChange={(e) => field.onChange([...(field.value || []), e])} value="">
+                    <FormControl>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select profession" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <ProfessionsSelector values={field.value} />
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="message"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Invitation Message</FormLabel>
@@ -162,15 +206,85 @@ export const InviteMember = () => {
               )}
             />
 
+            {isProjectSelected && (
+              <div className="grid grid-cols-1 gap-4">
+                <FormField
+                  name="member_professions"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Member profession in project</FormLabel>
+                      <SelectedProfessionView onChange={field.onChange} values={field.value || []} />
+                      <Select onValueChange={(e) => field.onChange([...(field.value || []), e])}>
+                        <FormControl>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select profession" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <ProfessionsSelector values={field.value} />
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="member_role"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Member role in project</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select role" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="lead">Team Lead</SelectItem>
+                          <SelectItem value="member">Member</SelectItem>
+                          <SelectItem value="viewer">Viewer</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            )}
+
             <div className="flex justify-end gap-2">
-              <Button type="button" variant="outline" onClick={() => form.reset()}>
+              <Button disabled={isPending} type="button" variant="outline" onClick={() => form.reset()}>
                 Cancel
               </Button>
-              <Button type="submit">Send Invitation</Button>
+
+              <LoadingButton isLoading={isPending} type="submit">
+                Send Invitation
+              </LoadingButton>
             </div>
           </form>
         </Form>
       </DialogContent>
     </Dialog>
+  );
+};
+
+const SelectedProfessionView = (props: { onChange: (e: string[]) => void; values: string[] }) => {
+  const { onChange, values } = props;
+
+  return (
+    <div className="flex flex-wrap gap-2">
+      {values.map((item) => (
+        <div
+          key={item}
+          className="border-primary bg-secondary flex min-w-fit flex-1 basis-[100px] items-center justify-between gap-3 rounded-md border px-3 py-1 text-sm dark:text-white [&>svg]:size-4 [&>svg]:cursor-pointer"
+        >
+          <span>{item}</span>
+          <X onClick={() => onChange(values.filter((e) => e !== item))} />
+        </div>
+      ))}
+    </div>
   );
 };

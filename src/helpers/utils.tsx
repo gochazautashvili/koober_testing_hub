@@ -1,4 +1,5 @@
 import { AlertTriangle, ArrowDown, ArrowUp, Bug, CheckCircle2, Minus, XCircle } from 'lucide-react';
+import { user_role } from '@/generated/prisma/prisma';
 
 export function isOverdue(dueDate: string) {
   return new Date(dueDate) < new Date();
@@ -47,10 +48,10 @@ export function getPriorityIcon(priority: string) {
   }
 }
 
-export function getRoleColor(role: string) {
-  if (role.includes('Senior') || role.includes('Lead')) return 'default';
+export function getRoleColor(role: user_role) {
+  if (role === 'admin') return 'default';
 
-  if (role.includes('Manager')) return 'secondary';
+  if (role === 'developer') return 'secondary';
 
   return 'outline';
 }

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 
 import { CreateProjectModal } from '../dialogs/create-project';
 
-import { useView } from '@/hooks/use-view';
+import { useView } from '@/hooks/helpers/use-view';
 
 export const Header = () => {
   const { setView, view } = useView();

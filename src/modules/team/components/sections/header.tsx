@@ -3,7 +3,7 @@ import { Grid3X3, List } from 'lucide-react';
 
 import { InviteMember } from '../dialogs/invite-member';
 import { Button } from '@/components/ui/button';
-import { useView } from '@/hooks/use-view';
+import { useView } from '@/hooks/helpers/use-view';
 
 export const Header = () => {
   const { view, setView } = useView();

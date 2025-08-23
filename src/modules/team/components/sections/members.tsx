@@ -1,5 +1,5 @@
 'use client';
-import { useView } from '@/hooks/use-view';
+import { useView } from '@/hooks/helpers/use-view';
 
 import { GridView } from '../common/grid-view';
 import { ListView } from '../common/list-view';

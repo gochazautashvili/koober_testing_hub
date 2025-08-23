@@ -1,3 +1,5 @@
+import { AuthView } from '@/modules/auth';
+
 export default function Auth() {
-  return <h1>Auth</h1>;
+  return <AuthView />;
 }

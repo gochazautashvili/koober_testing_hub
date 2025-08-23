@@ -1,6 +1,6 @@
-import { Loader } from "lucide-react";
+import { Loader } from 'lucide-react';
 
-import { Button, IButtonProps } from "../ui/button";
+import { Button, IButtonProps } from '../ui/button';
 
 interface Props extends IButtonProps {
   isLoading: boolean;
@@ -9,7 +9,7 @@ interface Props extends IButtonProps {
 export const LoadingButton = ({ isLoading, children, ...props }: Props) => {
   return (
     <Button disabled={props.disabled || isLoading} {...props}>
-      {isLoading ? <Loader /> : children}
+      {isLoading ? <Loader className="animate-spin text-white" /> : children}
     </Button>
   );
 };
