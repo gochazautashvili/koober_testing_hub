@@ -107,13 +107,7 @@ export const GridView = () => {
         ))}
       </div>
 
-      <Pagination
-        className="mb-16"
-        default_take={6}
-        hasMore={data.hasMore}
-        page_count={data.page_count}
-        per_page_counts={[6, 9, 12]}
-      />
+      <Pagination className="mb-16" hasMore={data.hasMore} page_count={data.page_count} />
     </div>
   );
 };

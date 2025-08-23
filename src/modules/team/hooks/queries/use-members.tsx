@@ -14,9 +14,13 @@ const getData = async (params: Record<string, string>) => {
 };
 
 export const membersQueryKey = (params: Record<string, string>) => {
-  const search = member_query_schema.safeParse(params);
+  const key = 'team-members';
 
-  return ['team-members', ...Object.entries(search).map((e) => e[1])];
+  const { data, error } = member_query_schema.safeParse(params);
+
+  if (error) return [key];
+
+  return [key, ...Object.entries(data).map((e) => e[1])];
 };
 
 export const useMembers = () => {

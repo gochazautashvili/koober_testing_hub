@@ -87,12 +87,7 @@ export const TableData = () => {
 
       <TableRow>
         <TableCell colSpan={8}>
-          <Pagination
-            className="p-1"
-            hasMore={data.hasMore}
-            page_count={data.page_count}
-            per_page_counts={[10, 15, 20]}
-          />
+          <Pagination className="p-1" hasMore={data.hasMore} page_count={data.page_count} />
         </TableCell>
       </TableRow>
     </Fragment>

@@ -21,7 +21,7 @@ interface IProps {
 }
 
 export const Pagination = ({ hasMore, page_count, className, default_take, per_page_counts }: IProps) => {
-  const { page, setPage, setTake, take } = usePagination(default_take);
+  const { page, setPage, setTake, take } = usePagination(default_take || 6);
 
   const prevPage = () => {
     if (page > 1) setPage(page - 1);
@@ -43,9 +43,9 @@ export const Pagination = ({ hasMore, page_count, className, default_take, per_p
 
   const visiblePages = getVisiblePages();
 
-  const takePerPages = per_page_counts || [10, 20, 30];
+  const takePerPages = per_page_counts || [6, 9, 12];
 
-  //   if (page_count === 1) return null;
+  if (page_count === 1) return null;
 
   return (
     <div className={cn('flex w-full items-center justify-between gap-4', className)}>
