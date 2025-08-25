@@ -21,10 +21,7 @@ export const invite_member_schema = z.discriminatedUnion('hasProject', [
           .min(1, { message: 'გთხოვთ, მიუთითოთ პროფესია პროექტში.' }),
       )
       .min(1),
-    message: z
-      .string()
-      .min(10, { message: 'მოწვევის შეტყობინება უნდა შეიცავდეს მინიმუმ 10 სიმბოლოს.' })
-      .max(500, { message: 'მოწვევის შეტყობინება არ უნდა აღემატებოდეს 500 სიმბოლოს.' }),
+    message: z.string().max(500, { message: 'მოწვევის შეტყობინება არ უნდა აღემატებოდეს 500 სიმბოლოს.' }).optional(),
   }),
 
   // When no project is selected
@@ -44,10 +41,7 @@ export const invite_member_schema = z.discriminatedUnion('hasProject', [
     projectId: z.undefined(),
     member_role: z.undefined(),
     member_professions: z.undefined(),
-    message: z
-      .string()
-      .min(10, { message: 'მოწვევის შეტყობინება უნდა შეიცავდეს მინიმუმ 10 სიმბოლოს.' })
-      .max(500, { message: 'მოწვევის შეტყობინება არ უნდა აღემატებოდეს 500 სიმბოლოს.' }),
+    message: z.string().max(500, { message: 'მოწვევის შეტყობინება არ უნდა აღემატებოდეს 500 სიმბოლოს.' }).optional(),
   }),
 ]);
 

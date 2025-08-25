@@ -1,16 +1,14 @@
 'use client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 
-import { membersQueryKey } from '../queries/use-members';
+import { membersQueryKey, useMembersQueryParams } from '../queries/use-members';
 import { remove_member } from '../../services/actions';
-import { getSearchParams } from '@/helpers/search';
 
 export const useRemoveMember = () => {
-  const searchParams = useSearchParams();
+  const queryParams = useMembersQueryParams();
 
-  const queryKey = membersQueryKey(getSearchParams(searchParams));
+  const queryKey = membersQueryKey(queryParams);
   const queryClient = useQueryClient();
 
   return useMutation({

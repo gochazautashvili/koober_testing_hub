@@ -32,9 +32,11 @@ export const Sidebar = ({ ...props }: ComponentProps<typeof AppSidebar>) => {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
       <SidebarContent>
         <Navigation />
       </SidebarContent>
+
       <SidebarFooter>
         <Footer />
       </SidebarFooter>

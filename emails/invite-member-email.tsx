@@ -1,20 +1,7 @@
-import {
-  Body,
-  Button,
-  Container,
-  Head,
-  Heading,
-  Hr,
-  Html,
-  Link,
-  Preview,
-  Row,
-  Section,
-  Text,
-} from '@react-email/components';
+import { Body, Button, Container, Head, Heading, Hr, Html, Preview, Section, Text } from '@react-email/components';
 
 import { env } from '@/helpers/env';
-import { CSSProperties } from 'react';
+import { email_theme } from '@/constants/themes';
 
 interface InviteMemberEmailProps {
   projectName?: string;
@@ -22,7 +9,7 @@ interface InviteMemberEmailProps {
   invitedByRole: string;
   recipientRole: string;
   recipientEmail: string;
-  personalMessage: string;
+  personalMessage?: string;
   temporaryPassword: string;
 }
 
@@ -52,334 +39,469 @@ export default function InviteMemberEmail({
 
   return (
     <Html>
-      <Head />
-      <Preview>თქვენ მოგიწვიეს Koober Coders-ის გუნდში</Preview>
-      <Body style={main}>
-        <Container style={container}>
-          <Section style={box}>
-            {/* Header */}
-            <Section style={header}>
-              <div style={logoContainer}>
-                <Text style={logo}>KC</Text>
-              </div>
-              <Heading style={headerTitle}>Koober Coders</Heading>
-              <Text style={headerSubtitle}>კეთილი იყოს თქვენი მობრძანება გუნდში!</Text>
-            </Section>
+      <Head>
+        <style>
+          {`
+            @import url('https://fonts.googleapis.com/css2?family=Courier+New:wght@400;700&display=swap');
+          `}
+        </style>
+      </Head>
+      <Preview>მოწვევა Koober Coders გუნდში</Preview>
+      <Body
+        style={{
+          margin: '0',
+          padding: '40px 20px',
+          backgroundColor: email_theme.colors.background.primary,
+        }}
+      >
+        <Container
+          style={{
+            margin: '0 auto',
+            maxWidth: '640px',
+            overflow: 'hidden',
+            borderRadius: email_theme.borders.radius.sm,
+            background: `linear-gradient(135deg, ${email_theme.colors.background.secondary}, ${email_theme.colors.background.tertiary})`,
+            border: `${email_theme.borders.width.thick} solid ${email_theme.colors.primary}`,
+          }}
+        >
+          {/* Header */}
+          <Section
+            style={{
+              margin: '0',
+              padding: email_theme.spacing.xxl,
+              textAlign: 'center',
+              background: `linear-gradient(135deg, ${email_theme.colors.background.dark}, ${email_theme.colors.background.secondary})`,
+              borderBottom: `${email_theme.borders.width.thin} solid ${email_theme.colors.primary}`,
+            }}
+          >
+            {/* Logo Circle - Using table for better centering */}
+            <table align="center" style={{ margin: `0 auto ${email_theme.spacing.xl}` }}>
+              <tr>
+                <td
+                  align="center"
+                  valign="middle"
+                  style={{
+                    width: '96px',
+                    height: '96px',
+                    borderRadius: email_theme.borders.radius.full,
+                    border: `${email_theme.borders.width.thick} solid ${email_theme.colors.primary}`,
+                    backgroundColor: email_theme.colors.background.secondary,
+                    textAlign: 'center',
+                  }}
+                >
+                  <Text
+                    style={{
+                      margin: '0',
+                      fontSize: email_theme.typography.sizes.xxl,
+                      fontWeight: 'bold',
+                      color: email_theme.colors.primary,
+                      fontFamily: email_theme.typography.fontFamily,
+                      lineHeight: email_theme.typography.lineHeight.tight,
+                    }}
+                  >
+                    KC
+                  </Text>
+                </td>
+              </tr>
+            </table>
 
-            {/* Main Content */}
-            <Section style={content}>
-              <Text style={paragraph}>გამარჯობა,</Text>
+            <Heading
+              style={{
+                margin: `0 0 ${email_theme.spacing.sm} 0`,
+                fontSize: email_theme.typography.sizes.xl,
+                fontWeight: 'bold',
+                color: email_theme.colors.primary,
+                fontFamily: email_theme.typography.fontFamily,
+              }}
+            >
+              კეთილი იყოს თქვენი მობრძანება
+            </Heading>
+            <Text
+              style={{
+                margin: '0',
+                fontSize: email_theme.typography.sizes.sm,
+                color: email_theme.colors.primary,
+                opacity: email_theme.opacity.medium,
+                fontFamily: email_theme.typography.fontFamily,
+              }}
+            >
+              Koober Coders გუნდში მოწვევა
+            </Text>
+          </Section>
 
-              <Text style={paragraph}>
-                {projectName ? (
-                  <>
-                    <strong>{invitedByName}</strong> ({translateRole(invitedByRole)}) გიწვევთ შეუერთდეთ{' '}
-                    <strong>{projectName}</strong> პროექტის გუნდს Koober Coders-ში, როგორც{' '}
-                    <strong>{translateRole(recipientRole)}</strong>.
-                  </>
-                ) : (
-                  <>
-                    <strong>{invitedByName}</strong> ({translateRole(invitedByRole)}) გიწვევთ შეუერთდეთ Koober Coders-ის
-                    ტესტირების ჰაბს, როგორც <strong>{translateRole(recipientRole)}</strong>.
-                  </>
-                )}
-              </Text>
+          {/* Content */}
+          <Section
+            style={{
+              margin: '0',
+              padding: email_theme.spacing.xxl,
+              backgroundColor: email_theme.colors.background.tertiary,
+            }}
+          >
+            <Text
+              style={{
+                marginBottom: email_theme.spacing.lg,
+                fontSize: email_theme.typography.sizes.base,
+                lineHeight: email_theme.typography.lineHeight.normal,
+                color: email_theme.colors.primary,
+                fontFamily: email_theme.typography.fontFamily,
+                opacity: email_theme.opacity.high,
+              }}
+            >
+              გამარჯობა,
+            </Text>
 
-              {personalMessage && (
-                <Section style={messageBox}>
-                  <Text style={messageTitle}>პირადი შეტყობინება</Text>
-                  <Text style={messageText}>{personalMessage}</Text>
-                </Section>
+            <Text
+              style={{
+                marginBottom: email_theme.spacing.xl,
+                fontSize: email_theme.typography.sizes.base,
+                lineHeight: email_theme.typography.lineHeight.normal,
+                color: email_theme.colors.primary,
+                fontFamily: email_theme.typography.fontFamily,
+                opacity: email_theme.opacity.high,
+              }}
+            >
+              <span style={{ fontWeight: 'bold' }}>{invitedByName}</span> ({translateRole(invitedByRole)}) გიწვევთ
+              შეუერთდეთ{' '}
+              {projectName ? (
+                <>
+                  <span style={{ fontWeight: 'bold' }}>{projectName}</span> პროექტის გუნდს
+                </>
+              ) : (
+                <>Koober Coders ტესტირების პლატფორმას</>
               )}
+              , როგორც <span style={{ fontWeight: 'bold' }}>{translateRole(recipientRole)}</span>.
+            </Text>
 
-              {/* Credentials Section */}
-              <Section style={credentialsBox}>
-                <Heading as="h3" style={credentialsTitle}>
-                  🔐 თქვენი შესვლის მონაცემები
-                </Heading>
-
-                <div style={credentialsInner}>
-                  <Text style={label}>ელ-ფოსტა:</Text>
-                  <Text style={credential}>{recipientEmail}</Text>
-
-                  <Text style={label}>დროებითი პაროლი:</Text>
-                  <Text style={credential}>{temporaryPassword}</Text>
-
-                  <Text style={warning}>⚠️ ეს პაროლი აუცილებლად უნდა შეცვალოთ პირველი შესვლის შემდეგ</Text>
-                </div>
-              </Section>
-
-              {/* Action Buttons */}
-              <Section style={buttonContainer}>
-                <Row>
-                  <Button style={primaryButton} href={loginUrl}>
-                    შესვლის გვერდზე გადასვლა
-                  </Button>
-                </Row>
-              </Section>
-
-              {/* Security Notice */}
-              <Section style={securityNotice}>
-                <Text style={securityText}>
-                  <strong>🔒 უსაფრთხოების შეტყობინება:</strong> ეს მოწვევა ძალაშია 48 საათის განმავლობაში. გთხოვთ,
-                  დაადასტუროთ თქვენი ელ-ფოსტა და შეცვალოთ პაროლი რაც შეიძლება მალე.
+            {/* Personal Message */}
+            {personalMessage && (
+              <div
+                style={{
+                  margin: `${email_theme.spacing.xl} 0`,
+                  padding: email_theme.spacing.lg,
+                  borderRadius: email_theme.borders.radius.sm,
+                  border: `${email_theme.borders.width.thin} solid ${email_theme.colors.primary}`,
+                  backgroundColor: email_theme.colors.background.secondary,
+                }}
+              >
+                <Text
+                  style={{
+                    margin: `0 0 ${email_theme.spacing.sm} 0`,
+                    fontSize: email_theme.typography.sizes.xs,
+                    color: email_theme.colors.primary,
+                    fontFamily: email_theme.typography.fontFamily,
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                  }}
+                >
+                  პირადი შეტყობინება
                 </Text>
-              </Section>
+                <Text
+                  style={{
+                    margin: '0',
+                    fontSize: email_theme.typography.sizes.sm,
+                    color: email_theme.colors.primary,
+                    fontFamily: email_theme.typography.fontFamily,
+                    fontStyle: 'italic',
+                    opacity: email_theme.opacity.high,
+                  }}
+                >
+                  {personalMessage}
+                </Text>
+              </div>
+            )}
 
-              <Hr style={divider} />
+            {/* Credentials Display */}
+            <div
+              style={{
+                margin: `${email_theme.spacing.xxl} 0`,
+                padding: email_theme.spacing.xl,
+                borderRadius: email_theme.borders.radius.sm,
+                border: `${email_theme.borders.width.thick} solid ${email_theme.colors.warning}`,
+                backgroundColor: email_theme.colors.background.dark,
+              }}
+            >
+              <Heading
+                as="h3"
+                style={{
+                  margin: `0 0 ${email_theme.spacing.lg} 0`,
+                  fontSize: email_theme.typography.sizes.base,
+                  color: email_theme.colors.warning,
+                  fontFamily: email_theme.typography.fontFamily,
+                  textAlign: 'center',
+                }}
+              >
+                🔐 თქვენი შესვლის მონაცემები
+              </Heading>
 
-              {/* Help Section */}
-              <Text style={helpText}>
-                დახმარება გჭირდებათ? დაგვიკავშირდით{' '}
-                <Link href="mailto:support@koobercoders.com" style={link}>
-                  support@koobercoders.com
-                </Link>
+              <div
+                style={{
+                  margin: `${email_theme.spacing.lg} 0`,
+                  padding: email_theme.spacing.lg,
+                  backgroundColor: email_theme.colors.background.secondary,
+                  borderRadius: email_theme.borders.radius.sm,
+                  border: `${email_theme.borders.width.thin} solid ${email_theme.colors.warning}`,
+                }}
+              >
+                <Text
+                  style={{
+                    margin: `0 0 ${email_theme.spacing.xs} 0`,
+                    fontSize: email_theme.typography.sizes.xs,
+                    color: email_theme.colors.warning,
+                    fontFamily: email_theme.typography.fontFamily,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  ელ-ფოსტა:
+                </Text>
+                <Text
+                  style={{
+                    margin: `0 0 ${email_theme.spacing.lg} 0`,
+                    fontSize: email_theme.typography.sizes.base,
+                    color: email_theme.colors.primary,
+                    fontFamily: email_theme.typography.fontFamily,
+                    backgroundColor: email_theme.colors.background.dark,
+                    padding: email_theme.spacing.sm,
+                    borderRadius: '4px',
+                  }}
+                >
+                  {recipientEmail}
+                </Text>
+
+                <Text
+                  style={{
+                    margin: `0 0 ${email_theme.spacing.xs} 0`,
+                    fontSize: email_theme.typography.sizes.xs,
+                    color: email_theme.colors.warning,
+                    fontFamily: email_theme.typography.fontFamily,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  დროებითი პაროლი:
+                </Text>
+                <Text
+                  style={{
+                    margin: '0',
+                    fontSize: email_theme.typography.sizes.base,
+                    color: email_theme.colors.primary,
+                    fontFamily: email_theme.typography.fontFamily,
+                    backgroundColor: email_theme.colors.background.dark,
+                    padding: email_theme.spacing.sm,
+                    borderRadius: '4px',
+                    letterSpacing: '2px',
+                  }}
+                >
+                  {temporaryPassword}
+                </Text>
+              </div>
+
+              <Text
+                style={{
+                  margin: `${email_theme.spacing.lg} 0 0 0`,
+                  fontSize: email_theme.typography.sizes.xs,
+                  color: email_theme.colors.danger,
+                  fontFamily: email_theme.typography.fontFamily,
+                  textAlign: 'center',
+                }}
+              >
+                ⚠️ გაფრთხილება: პაროლი აუცილებლად შეცვალეთ პირველი შესვლის შემდეგ
               </Text>
+            </div>
 
-              <Text style={footerText}>
-                თუ ეს მოწვევა მოულოდნელი იყო თქვენთვის, გთხოვთ, უგულებელყოთ ეს ელ-ფოსტა ან დაუკავშირდით ჩვენს
-                მხარდაჭერის გუნდს.
+            {/* Instructions Box */}
+            <div
+              style={{
+                margin: `${email_theme.spacing.xl} 0`,
+                padding: email_theme.spacing.lg,
+                borderRadius: email_theme.borders.radius.sm,
+                border: `${email_theme.borders.width.thin} solid ${email_theme.colors.primary}`,
+                backgroundColor: email_theme.colors.background.secondary,
+              }}
+            >
+              <Text
+                style={{
+                  margin: `0 0 ${email_theme.spacing.md} 0`,
+                  fontSize: email_theme.typography.sizes.sm,
+                  color: email_theme.colors.primary,
+                  fontFamily: email_theme.typography.fontFamily,
+                  fontWeight: 'bold',
+                }}
+              >
+                📋 შემდეგი ნაბიჯები:
               </Text>
-            </Section>
+              <Text
+                style={{
+                  margin: '0',
+                  fontSize: email_theme.typography.sizes.sm,
+                  color: email_theme.colors.primary,
+                  fontFamily: email_theme.typography.fontFamily,
+                  opacity: email_theme.opacity.high,
+                  lineHeight: email_theme.typography.lineHeight.normal,
+                }}
+              >
+                1. დააჭირეთ ქვემოთ მოცემულ ღილაკს
+                <br />
+                2. შეიყვანეთ თქვენი ელ-ფოსტა და დროებითი პაროლი
+                <br />
+                3. სისტემა მოგთხოვთ ახალი პაროლის დაყენებას
+                <br />
+                4. დაყენების შემდეგ მიიღებთ სრულ წვდომას სისტემაზე
+              </Text>
+            </div>
 
-            {/* Footer */}
-            <Section style={footer}>
-              <Text style={footerCopyright}>© 2024 Koober Coders. ყველა უფლება დაცულია.</Text>
-              <Text style={footerLinks}>
-                <Link href="https://koobercoders.com" style={footerLink}>
-                  koobercoders.com
-                </Link>
-                {' | '}
-                <Link href="https://koobercoders.com/privacy" style={footerLink}>
-                  კონფიდენციალურობის პოლიტიკა
-                </Link>
-                {' | '}
-                <Link href="https://koobercoders.com/terms" style={footerLink}>
-                  მომსახურების პირობები
-                </Link>
+            {/* Security Info Box */}
+            <div
+              style={{
+                margin: `${email_theme.spacing.xl} 0`,
+                padding: email_theme.spacing.lg,
+                borderRadius: email_theme.borders.radius.sm,
+                border: `${email_theme.borders.width.thin} solid ${email_theme.colors.danger}`,
+                backgroundColor: email_theme.colors.background.secondary,
+              }}
+            >
+              <Text
+                style={{
+                  margin: '0',
+                  fontSize: email_theme.typography.sizes.sm,
+                  color: email_theme.colors.danger,
+                  fontFamily: email_theme.typography.fontFamily,
+                  fontWeight: 'bold',
+                }}
+              >
+                🔒 უსაფრთხოების ინფორმაცია
               </Text>
-            </Section>
+              <Text
+                style={{
+                  margin: `${email_theme.spacing.sm} 0 0 0`,
+                  fontSize: email_theme.typography.sizes.xs,
+                  color: email_theme.colors.primary,
+                  fontFamily: email_theme.typography.fontFamily,
+                  opacity: email_theme.opacity.high,
+                  lineHeight: email_theme.typography.lineHeight.normal,
+                }}
+              >
+                • მოწვევა ძალაშია მხოლოდ 48 საათის განმავლობაში
+                <br />
+                • პაროლი უნდა შეიცვალოს პირველივე შესვლისას
+                <br />• არ გააზიაროთ ეს მონაცემები სხვებთან
+              </Text>
+            </div>
+
+            <Hr
+              style={{
+                border: 'none',
+                borderTop: `${email_theme.borders.width.thin} solid ${email_theme.colors.primary}`,
+                margin: `${email_theme.spacing.xxl} 0`,
+              }}
+            />
+
+            {/* Login Button */}
+            <div style={{ margin: `${email_theme.spacing.xxl} 0`, textAlign: 'center' }}>
+              <Button
+                href={loginUrl}
+                style={{
+                  display: 'inline-block',
+                  padding: `${email_theme.spacing.md} ${email_theme.spacing.xxl}`,
+                  borderRadius: email_theme.borders.radius.sm,
+                  border: `${email_theme.borders.width.thick} solid ${email_theme.colors.primary}`,
+                  backgroundColor: email_theme.colors.background.dark,
+                  color: email_theme.colors.primary,
+                  fontFamily: email_theme.typography.fontFamily,
+                  fontSize: email_theme.typography.sizes.base,
+                  fontWeight: 'bold',
+                  textDecoration: 'none',
+                }}
+              >
+                სისტემაში შესვლა
+              </Button>
+            </div>
+
+            <Text
+              style={{
+                marginTop: email_theme.spacing.xl,
+                fontSize: email_theme.typography.sizes.sm,
+                color: email_theme.colors.primary,
+                fontFamily: email_theme.typography.fontFamily,
+                opacity: email_theme.opacity.high,
+                textAlign: 'center',
+              }}
+            >
+              დახმარება გჭირდებათ? მოგვწერეთ:{' '}
+              <a
+                href="mailto:support@koobercoders.com"
+                style={{
+                  color: email_theme.colors.primary,
+                  textDecoration: 'underline',
+                }}
+              >
+                support@koobercoders.com
+              </a>
+            </Text>
+
+            <Text
+              style={{
+                marginTop: email_theme.spacing.sm,
+                fontSize: email_theme.typography.sizes.xs,
+                color: email_theme.colors.primary,
+                fontFamily: email_theme.typography.fontFamily,
+                opacity: email_theme.opacity.minimal,
+                textAlign: 'center',
+              }}
+            >
+              თუ ეს მოწვევა მოულოდნელი იყო თქვენთვის, უგულებელყავით ეს შეტყობინება
+            </Text>
+          </Section>
+
+          {/* Footer */}
+          <Section
+            style={{
+              margin: '0',
+              padding: `${email_theme.spacing.xl} ${email_theme.spacing.xxl}`,
+              textAlign: 'center',
+              backgroundColor: email_theme.colors.background.dark,
+              borderTop: `${email_theme.borders.width.thin} solid ${email_theme.colors.primary}`,
+            }}
+          >
+            <Text
+              style={{
+                margin: `0 0 ${email_theme.spacing.sm} 0`,
+                fontSize: email_theme.typography.sizes.xs,
+                color: email_theme.colors.primary,
+                fontFamily: email_theme.typography.fontFamily,
+              }}
+            >
+              Koober Coders - Testing Platform
+            </Text>
+            <Text
+              style={{
+                margin: `0 0 ${email_theme.spacing.sm} 0`,
+                fontSize: email_theme.typography.sizes.xs,
+                fontFamily: email_theme.typography.fontFamily,
+              }}
+            >
+              <a
+                href="https://koobercoders.com"
+                style={{
+                  color: email_theme.colors.primary,
+                  textDecoration: 'none',
+                }}
+              >
+                koobercoders.com
+              </a>
+            </Text>
+            <Text
+              style={{
+                margin: `${email_theme.spacing.lg} 0 0 0`,
+                fontSize: email_theme.typography.sizes.xs,
+                color: email_theme.colors.primary,
+                fontFamily: email_theme.typography.fontFamily,
+                opacity: email_theme.opacity.minimal,
+              }}
+            >
+              © 2024 Koober Coders. ყველა უფლება დაცულია.
+            </Text>
           </Section>
         </Container>
       </Body>
     </Html>
   );
 }
-
-// Styles
-const main = {
-  backgroundColor: '#f5f5f5',
-  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-};
-
-const container = {
-  margin: '0 auto',
-  padding: '40px 20px',
-  maxWidth: '600px',
-};
-
-const box = {
-  backgroundColor: '#ffffff',
-  borderRadius: '12px',
-  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-  overflow: 'hidden',
-};
-
-const header = {
-  background: 'linear-gradient(to right, #4ade80, #3b82f6)',
-  padding: '32px',
-  textAlign: 'center' as const,
-};
-
-const logoContainer = {
-  display: 'inline-block',
-  width: '80px',
-  height: '80px',
-  borderRadius: '50%',
-  backgroundColor: 'rgba(255, 255, 255, 0.2)',
-  marginBottom: '16px',
-};
-
-const logo = {
-  color: '#ffffff',
-  fontSize: '32px',
-  fontWeight: 'bold',
-  lineHeight: '80px',
-  margin: '0',
-};
-
-const headerTitle = {
-  color: '#ffffff',
-  fontSize: '28px',
-  fontWeight: '600',
-  margin: '0 0 8px 0',
-};
-
-const headerSubtitle = {
-  color: 'rgba(255, 255, 255, 0.9)',
-  fontSize: '16px',
-  margin: '0',
-};
-
-const content = {
-  padding: '40px 32px',
-};
-
-const paragraph = {
-  color: '#374151',
-  fontSize: '16px',
-  lineHeight: '24px',
-  marginBottom: '24px',
-};
-
-const messageBox = {
-  backgroundColor: '#f9fafb',
-  border: '1px solid #e5e7eb',
-  borderRadius: '8px',
-  padding: '24px',
-  marginBottom: '32px',
-};
-
-const messageTitle = {
-  color: '#6b7280',
-  fontSize: '14px',
-  fontWeight: '600',
-  textTransform: 'uppercase' as const,
-  letterSpacing: '0.5px',
-  marginTop: '0',
-  marginBottom: '8px',
-};
-
-const messageText = {
-  color: '#374151',
-  fontSize: '16px',
-  fontStyle: 'italic',
-  margin: '0',
-};
-
-const credentialsBox = {
-  background: 'linear-gradient(to bottom right, #fef3c7, #fed7aa)',
-  border: '1px solid rgba(251, 191, 36, 0.2)',
-  borderRadius: '8px',
-  padding: '24px',
-  marginBottom: '32px',
-};
-
-const credentialsTitle = {
-  color: '#92400e',
-  fontSize: '18px',
-  fontWeight: '600',
-  marginTop: '0',
-  marginBottom: '16px',
-};
-
-const credentialsInner = {
-  backgroundColor: 'rgba(255, 255, 255, 0.6)',
-  borderRadius: '8px',
-  padding: '16px',
-};
-
-const label = {
-  color: '#92400e',
-  fontSize: '14px',
-  fontWeight: '600',
-  marginTop: '0',
-  marginBottom: '4px',
-};
-
-const credential = {
-  backgroundColor: '#ffffff',
-  border: '1px solid rgba(251, 191, 36, 0.3)',
-  borderRadius: '4px',
-  padding: '12px',
-  fontFamily: 'monospace',
-  fontSize: '16px',
-  color: '#451a03',
-  marginTop: '0',
-  marginBottom: '16px',
-};
-
-const warning = {
-  color: '#92400e',
-  fontSize: '12px',
-  marginTop: '8px',
-  marginBottom: '0',
-};
-
-const buttonContainer: CSSProperties = {
-  marginBottom: '32px',
-};
-
-const primaryButton = {
-  backgroundColor: '#22c55e',
-  borderRadius: '8px',
-  color: '#ffffff',
-  display: 'block',
-  fontSize: '16px',
-  fontWeight: '600',
-  textAlign: 'center' as const,
-  textDecoration: 'none',
-  padding: '12px 24px',
-};
-
-const securityNotice = {
-  backgroundColor: '#fee2e2',
-  borderRadius: '8px',
-  padding: '16px',
-  marginBottom: '24px',
-};
-
-const securityText = {
-  color: '#991b1b',
-  fontSize: '14px',
-  margin: '0',
-};
-
-const divider = {
-  borderColor: '#e5e7eb',
-  marginTop: '32px',
-  marginBottom: '32px',
-};
-
-const helpText = {
-  color: '#6b7280',
-  fontSize: '14px',
-  textAlign: 'center' as const,
-  marginBottom: '8px',
-};
-
-const footerText = {
-  color: '#9ca3af',
-  fontSize: '12px',
-  textAlign: 'center' as const,
-  marginBottom: '0',
-};
-
-const link = {
-  color: '#3b82f6',
-  textDecoration: 'underline',
-};
-
-const footer = {
-  backgroundColor: '#1f2937',
-  padding: '24px 32px',
-  textAlign: 'center' as const,
-};
-
-const footerCopyright = {
-  color: 'rgba(255, 255, 255, 0.6)',
-  fontSize: '12px',
-  marginTop: '0',
-  marginBottom: '8px',
-};
-
-const footerLinks = {
-  color: 'rgba(255, 255, 255, 0.6)',
-  fontSize: '12px',
-  margin: '0',
-};
-
-const footerLink = {
-  color: '#4ade80',
-  textDecoration: 'underline',
-};

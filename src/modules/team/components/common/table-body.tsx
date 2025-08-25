@@ -8,12 +8,13 @@ import { Badge } from '@/components/ui/badge';
 
 import MembersTableSkeleton from '../skeletons/list-view.skeleton';
 import { ErrorAlert } from '@/components/errors/error-alert';
+import { Pagination } from '@/components/common/pagination';
 import { ActionsButton } from './actions-button';
 
+import { MEMBERS_LIST_VIEW_TAKE, MEMBERS_LIST_VIEW_TAKE_DATA_PER_PAGE } from '../../constants/queries';
 import { getInitials } from '@/library/utils';
 
 import { useMembers } from '../../hooks/queries/use-members';
-import { Pagination } from '@/components/common/pagination';
 
 export const TableData = () => {
   const { data, status, error, refetch } = useMembers();
@@ -80,14 +81,20 @@ export const TableData = () => {
           </TableCell>
 
           <TableCell className="text-right">
-            <ActionsButton memberId={member.id} />
+            <ActionsButton username={member.username} memberId={member.id} email={member.email} role={member.role} />
           </TableCell>
         </TableRow>
       ))}
 
       <TableRow>
         <TableCell colSpan={8}>
-          <Pagination className="p-1" hasMore={data.hasMore} page_count={data.page_count} />
+          <Pagination
+            className="p-1"
+            hasMore={data.hasMore}
+            page_count={data.page_count}
+            default_take={MEMBERS_LIST_VIEW_TAKE}
+            per_page_counts={MEMBERS_LIST_VIEW_TAKE_DATA_PER_PAGE}
+          />
         </TableCell>
       </TableRow>
     </Fragment>

@@ -9,10 +9,13 @@ import { MembersGridViewSkeleton } from '../skeletons/grid-view-skeleton';
 import DataNotFoundCard from '@/components/errors/data-notfound';
 import { ErrorAlert } from '@/components/errors/error-alert';
 
-import { useMembers } from '../../hooks/queries/use-members';
-import { getInitials } from '@/library/utils';
-import { ActionsButton } from './actions-button';
 import { Pagination } from '@/components/common/pagination';
+import { ActionsButton } from './actions-button';
+
+import { MEMBERS_GRID_VIEW_TAKE, MEMBERS_GRID_VIEW_TAKE_DATA_PER_PAGE } from '../../constants/queries';
+import { getInitials } from '@/library/utils';
+
+import { useMembers } from '../../hooks/queries/use-members';
 
 export const GridView = () => {
   const { data, status, error, refetch } = useMembers();
@@ -50,14 +53,18 @@ export const GridView = () => {
                   </div>
                 </div>
 
-                <ActionsButton memberId={member.id} />
+                <ActionsButton
+                  username={member.username}
+                  memberId={member.id}
+                  email={member.email}
+                  role={member.role}
+                />
               </div>
 
               <div className="mt-2 flex gap-2">
                 <Badge variant={member.is_active ? 'default' : 'destructive'}>
                   {member.is_active ? 'Active' : 'Inactive'}
                 </Badge>
-                <Badge variant="secondary">{member.role}</Badge>
               </div>
             </CardHeader>
 
@@ -107,7 +114,13 @@ export const GridView = () => {
         ))}
       </div>
 
-      <Pagination className="mb-16" hasMore={data.hasMore} page_count={data.page_count} />
+      <Pagination
+        className="mb-16"
+        hasMore={data.hasMore}
+        page_count={data.page_count}
+        default_take={MEMBERS_GRID_VIEW_TAKE}
+        per_page_counts={MEMBERS_GRID_VIEW_TAKE_DATA_PER_PAGE}
+      />
     </div>
   );
 };

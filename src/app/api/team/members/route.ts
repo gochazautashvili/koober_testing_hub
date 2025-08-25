@@ -1,15 +1,15 @@
 import { NextRequest } from 'next/server';
 
 import { filter_member_status, member_query_schema } from './services/validations';
-import { IMembersResponse } from './services/models';
 import { member_selector } from './services/selectors';
+import { IMembersResponse } from './services/models';
 
 import { Prisma } from '@/generated/prisma/prisma';
 import { getSearchParams } from '@/helpers/search';
 import { getErrorMessage } from '@/helpers/errors';
 import { requireRole } from '@/auth/helpers';
-import { db } from '@/library/database';
 import { errors } from '@/constants/errors';
+import { db } from '@/library/database';
 
 export async function GET(req: NextRequest) {
   try {

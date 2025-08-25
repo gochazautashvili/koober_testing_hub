@@ -8,7 +8,7 @@ const resend = new Resend(env.NEXT_PUBLIC_RESEND_API_KEY);
 export interface ISendEmailProps {
   EmailTemplate: ReactNode;
   subject: string;
-  from: string;
+  from?: string;
   to: string[];
 }
 

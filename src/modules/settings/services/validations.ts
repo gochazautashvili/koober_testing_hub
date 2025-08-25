@@ -1,3 +1,4 @@
+import { reset_password_schema } from '@/services/validations';
 import { z } from 'zod';
 
 export const profile_schema = z.object({
@@ -31,3 +32,10 @@ export const profile_schema = z.object({
 });
 
 export type IProfileValues = z.infer<typeof profile_schema>;
+
+export const change_password_schema = z.object({
+  oldPassword: z.string().min(1),
+  ...reset_password_schema.shape,
+});
+
+export type IChangePasswordValues = z.infer<typeof change_password_schema>;

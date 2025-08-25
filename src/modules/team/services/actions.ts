@@ -2,13 +2,20 @@
 import { after } from 'next/server';
 import bcrypt from 'bcryptjs';
 
-import { IInviteMemberValues, invite_member_schema } from './validations';
 import InviteMemberEmail from '@/emails/invite-member-email';
+import RoleChangeEmail from '@/emails/role-change-email';
+
+import { IInviteMemberValues, invite_member_schema } from './validations';
+import { user_role } from '@/generated/prisma/prisma';
+
 import { getErrorMessage } from '@/helpers/errors';
 import { requireRole } from '@/auth/helpers';
+
+import { errors } from '@/constants/errors';
 import { sendEmail } from '@/library/smtp';
 import { db } from '@/library/database';
 
+// POST
 export const invite_member = async (values: IInviteMemberValues) => {
   try {
     const { user } = await requireRole(['admin']);
@@ -70,7 +77,7 @@ export const invite_member = async (values: IInviteMemberValues) => {
     } else {
       after(async () => {
         await sendEmail({
-          from: 'user.email',
+          from: user.email,
           to: [member.email],
           subject: 'Koober Coders - მოწვევა',
           EmailTemplate: InviteMemberEmail({
@@ -91,6 +98,44 @@ export const invite_member = async (values: IInviteMemberValues) => {
   }
 };
 
+// EDIT
+export const edit_user_role = async ({ role, userId }: { userId: string; role: user_role }) => {
+  try {
+    const { user } = await requireRole(['admin']);
+
+    if (user.id === userId) throw new Error('არვიცია ეს როგორ ქენი ჯიგარო მაგრამ შენ თავს ვერ წაშლი აქედან.');
+
+    const existingMember = await db.user.findUnique({ where: { id: userId } });
+
+    if (!existingMember) throw new Error(errors.not_found);
+
+    const member = await db.user.update({
+      where: { id: existingMember.id },
+      data: { role },
+    });
+
+    after(async () => {
+      await sendEmail({
+        from: user.email,
+        to: [member.email],
+        subject: 'Koober Coders - როლის ცვლილება',
+        EmailTemplate: RoleChangeEmail({
+          newRole: member.role,
+          changedBy: user.username,
+          memberEmail: member.email,
+          memberName: member.username,
+          oldRole: existingMember.role,
+        }),
+      });
+    });
+
+    return { message: 'როლი წარმატებით შეიცვალა.' };
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
+};
+
+// DELETE
 export const remove_member = async (id: string) => {
   try {
     const { user } = await requireRole(['admin']);

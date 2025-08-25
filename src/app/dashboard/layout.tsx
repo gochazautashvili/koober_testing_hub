@@ -13,7 +13,7 @@ export default async function MainLayout({ children }: { children: ReactNode }) 
 
   return (
     <AuthProvider user={user}>
-      <DashboardLayout>{children}</DashboardLayout>;
+      <DashboardLayout>{children}</DashboardLayout>
     </AuthProvider>
   );
 }

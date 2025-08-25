@@ -1,4 +1,4 @@
-import { TaskDetailsView } from '@/modules/task-details';
+import { TaskDetailsView } from '@/modules/tasks/details';
 
 export default function TaskDetails() {
   return <TaskDetailsView />;

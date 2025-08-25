@@ -1,7 +1,7 @@
 'use client';
 import { Grid3X3, List } from 'lucide-react';
 
-import { InviteMember } from '../dialogs/invite-member';
+import { InviteMemberDialog } from '../dialogs/invite-member-dialog';
 import { Button } from '@/components/ui/button';
 import { useView } from '@/hooks/helpers/use-view';
 
@@ -34,7 +34,7 @@ export const Header = () => {
           </Button>
         </div>
 
-        <InviteMember />
+        <InviteMemberDialog />
       </div>
     </div>
   );
