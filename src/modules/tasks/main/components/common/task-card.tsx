@@ -18,8 +18,8 @@ export const TaskCard = ({ task }: { task: (typeof tasks)[0] }) => {
           <Badge className={`text-xs ${getSeverityColor(task.severity)}`}>{task.severity}</Badge>
         </div>
 
-        <h4 className="mb-2 line-clamp-2 text-sm font-medium">{task.title}</h4>
-        <p className="text-muted-foreground mb-3 line-clamp-2 text-xs">{task.description}</p>
+        <h4 className="mb-2 line-clamp-2 text-base font-medium">{task.title}</h4>
+        <p className="text-muted-foreground mb-3 line-clamp-2 text-sm">{task.description}</p>
 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
