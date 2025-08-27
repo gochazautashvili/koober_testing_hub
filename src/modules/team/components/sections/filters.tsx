@@ -2,13 +2,14 @@
 import { Search } from 'lucide-react';
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { filter_member_status } from '@/app/api/team/members/services/validations';
-import { ProfessionsSelector } from '@/components/data/profession-selectors';
-import { useMemberFilters } from '../../hooks/search/use-member-filters';
 import { Input } from '@/components/ui/input';
 
+import { filter_member_status } from '@/app/api/team/members/services/validations';
+import { useTeamMemberFilters } from '../../hooks/search/use-member-filters';
+import { ProfessionsSelector } from '@/components/data';
+
 export const Filters = () => {
-  const { search, setSearch } = useMemberFilters();
+  const { search, setSearch } = useTeamMemberFilters();
 
   return (
     <div className="flex flex-col gap-4 md:flex-row md:items-center">

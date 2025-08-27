@@ -6,19 +6,17 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 
 import { MembersGridViewSkeleton } from '../skeletons/grid-view-skeleton';
-import DataNotFoundCard from '@/components/errors/data-notfound';
-import { ErrorAlert } from '@/components/errors/error-alert';
+import { ErrorAlert, DataNotFoundCard } from '@/components/errors';
 
-import { Pagination } from '@/components/common/pagination';
 import { ActionsButton } from '../common/actions-button';
+import { Pagination } from '@/components/common';
 
-import { MEMBERS_GRID_VIEW_TAKE, MEMBERS_GRID_VIEW_TAKE_DATA_PER_PAGE } from '../../constants/queries';
+import { TEAM_MEMBERS_GRID_VIEW_TAKE, TEAM_MEMBERS_GRID_VIEW_TAKE_DATA_PER_PAGE } from '../../constants/queries';
+import { useTeamMembers } from '../../hooks/queries/use-team-members';
 import { getInitials } from '@/library/utils';
 
-import { useMembers } from '../../hooks/queries/use-members';
-
 export const GridView = () => {
-  const { data, status, error, refetch } = useMembers();
+  const { data, status, error, refetch } = useTeamMembers();
 
   if (status === 'pending') return <MembersGridViewSkeleton />;
 
@@ -118,8 +116,8 @@ export const GridView = () => {
         className="mb-16"
         hasMore={data.hasMore}
         page_count={data.page_count}
-        default_take={MEMBERS_GRID_VIEW_TAKE}
-        per_page_counts={MEMBERS_GRID_VIEW_TAKE_DATA_PER_PAGE}
+        default_take={TEAM_MEMBERS_GRID_VIEW_TAKE}
+        per_page_counts={TEAM_MEMBERS_GRID_VIEW_TAKE_DATA_PER_PAGE}
       />
     </div>
   );

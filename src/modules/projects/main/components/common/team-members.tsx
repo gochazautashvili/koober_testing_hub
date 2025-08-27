@@ -1,15 +1,15 @@
 import { member_role } from '@/generated/prisma/prisma';
 
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 
 import { MemberListSkeleton } from '../skeletons/members-list-skeleton';
-import { ErrorAlert } from '@/components/errors/error-alert';
+import { ErrorAlert } from '@/components/errors';
 
-import { useMembersForProject } from '../../hooks/queries/use-members-for-project';
 import { cn, getFullProfession, getInitials } from '@/library/utils';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useMembers } from '@/hooks/queries/use-members';
 
 interface ITeamMembersProps {
   values: { id: string; role: member_role }[];
@@ -17,7 +17,7 @@ interface ITeamMembersProps {
 }
 
 export const TeamMembers = ({ values, onSelect }: ITeamMembersProps) => {
-  const { status, data, error, refetch } = useMembersForProject();
+  const { status, data, error, refetch } = useMembers();
 
   if (status === 'pending') return <MemberListSkeleton />;
 

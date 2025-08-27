@@ -22,14 +22,15 @@ export async function GET(req: NextRequest) {
 
     if (error) return new Response(error.message, { status: 400 });
 
-    const { page, take, query, status } = data;
+    const { page, take, query, status, member } = data;
 
     const whereConditions: Prisma.ProjectWhereInput = {
       id: { not: user.id },
       ...(status && { status }),
+      ...(member && { members: { some: { user: { email: member } } } }),
       ...(user.role === 'developer' && { members: { some: { id: user.id } } }),
       ...(query && {
-        OR: [{ name: { contains: query } }, { description: { contains: query } }],
+        OR: [{ name: { search: query } }, { description: { search: query } }],
       }),
     };
 

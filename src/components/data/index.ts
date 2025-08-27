@@ -1,1 +1,2 @@
-export * from './profession-selectors';
+export * from './professions-selector';
+export * from './members-selector';

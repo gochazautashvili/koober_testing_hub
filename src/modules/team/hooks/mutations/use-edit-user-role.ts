@@ -2,19 +2,19 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { membersQueryKey } from '../queries/use-members';
+import { teamMembersQueryKey } from '../queries/use-team-members';
 import { edit_user_role } from '../../services/actions';
 
-import { MEMBERS_GRID_VIEW_TAKE, MEMBERS_LIST_VIEW_TAKE } from '../../constants/queries';
+import { TEAM_MEMBERS_GRID_VIEW_TAKE, TEAM_MEMBERS_LIST_VIEW_TAKE } from '../../constants/queries';
 import { usePaginatedQueryParams } from '@/hooks/helpers/use-paginated-query-params';
 
 export const useEditMemberRole = () => {
   const queryParams = usePaginatedQueryParams({
-    GRID_TAKE: MEMBERS_GRID_VIEW_TAKE,
-    LIST_TAKE: MEMBERS_LIST_VIEW_TAKE,
+    GRID_TAKE: TEAM_MEMBERS_GRID_VIEW_TAKE,
+    LIST_TAKE: TEAM_MEMBERS_LIST_VIEW_TAKE,
   });
 
-  const queryKey = membersQueryKey(queryParams);
+  const queryKey = teamMembersQueryKey(queryParams);
   const queryClient = useQueryClient();
 
   return useMutation({

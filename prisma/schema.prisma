@@ -1,11 +1,12 @@
-generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../generated/prisma"
+  previewFeatures = ["fullTextSearchPostgres"]
 }
 
 // ==================== ENUMS ====================
@@ -75,8 +76,6 @@ enum notification_type {
 }
 
 // ==================== MODELS ====================
-
-// TODO: add profession model
 
 model User {
   id        String    @id @default(uuid())

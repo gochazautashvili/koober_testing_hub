@@ -2,7 +2,7 @@ import { parseAsString, useQueryStates } from 'nuqs';
 
 import { filter_member_status } from '@/app/api/team/members/services/validations';
 
-export const useMemberFilters = () => {
+export const useTeamMemberFilters = () => {
   const [search, setSearch] = useQueryStates({
     query: parseAsString.withDefault(''),
     profession: parseAsString.withDefault('all'),

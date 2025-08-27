@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
       ...(status !== filter_member_status.ALL && { is_active }),
       ...(profession && { professions: { some: { name: profession } } }),
       ...(query && {
-        OR: [{ email: { contains: query } }, { username: { contains: query } }],
+        OR: [{ email: { search: query } }, { username: { search: query } }],
       }),
     };
 

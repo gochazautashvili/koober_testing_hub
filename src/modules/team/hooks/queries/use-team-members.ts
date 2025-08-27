@@ -5,7 +5,7 @@ import axios from 'axios';
 import { member_query_schema } from '@/app/api/team/members/services/validations';
 import { IMembersResponse } from '@/app/api/team/members/services/models';
 
-import { MEMBERS_GRID_VIEW_TAKE, MEMBERS_LIST_VIEW_TAKE } from '../../constants/queries';
+import { TEAM_MEMBERS_GRID_VIEW_TAKE, TEAM_MEMBERS_LIST_VIEW_TAKE } from '../../constants/queries';
 import { usePaginatedQueryParams } from '@/hooks/helpers/use-paginated-query-params';
 
 const getData = async (params: Record<string, string>) => {
@@ -14,7 +14,7 @@ const getData = async (params: Record<string, string>) => {
   return res.data;
 };
 
-export const membersQueryKey = (params: Record<string, string>) => {
+export const teamMembersQueryKey = (params: Record<string, string>) => {
   const key = 'team-members';
 
   const { data, error } = member_query_schema.safeParse(params);
@@ -24,14 +24,14 @@ export const membersQueryKey = (params: Record<string, string>) => {
   return [key, ...Object.entries(data).map((e) => e[1])];
 };
 
-export const useMembers = () => {
+export const useTeamMembers = () => {
   const queryParams = usePaginatedQueryParams({
-    GRID_TAKE: MEMBERS_GRID_VIEW_TAKE,
-    LIST_TAKE: MEMBERS_LIST_VIEW_TAKE,
+    GRID_TAKE: TEAM_MEMBERS_GRID_VIEW_TAKE,
+    LIST_TAKE: TEAM_MEMBERS_LIST_VIEW_TAKE,
   });
 
   return useQuery({
-    queryKey: membersQueryKey(queryParams),
+    queryKey: teamMembersQueryKey(queryParams),
     queryFn: () => getData(queryParams),
   });
 };

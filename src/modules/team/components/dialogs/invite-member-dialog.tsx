@@ -17,8 +17,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-import { ProfessionsSelector } from '@/components/data/profession-selectors';
 import { LoadingButton } from '@/components/common/loading-button';
+import { ProfessionsSelector } from '@/components/data';
 
 import { IInviteMemberValues, invite_member_schema } from '../../services/validations';
 import { useInviteMember } from '../../hooks/mutations/use-invite-member';

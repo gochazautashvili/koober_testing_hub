@@ -6,6 +6,7 @@ import { project_status } from '@/generated/prisma/prisma';
 export const project_query_schema = z.object({
   query: z.string().min(1).max(256).optional(),
   status: z.enum(project_status).optional(),
+  member: z.string().optional(),
   ...pagination_params.shape,
 });
 

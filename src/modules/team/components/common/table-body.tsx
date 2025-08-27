@@ -7,18 +7,16 @@ import { TableCell, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 
 import MembersTableSkeleton from '../skeletons/list-view-skeleton';
-import { ErrorAlert } from '@/components/errors/error-alert';
-import { Pagination } from '@/components/common/pagination';
+import { ErrorAlert, DataNotFoundCard } from '@/components/errors';
+import { Pagination } from '@/components/common';
 import { ActionsButton } from './actions-button';
 
-import { MEMBERS_LIST_VIEW_TAKE, MEMBERS_LIST_VIEW_TAKE_DATA_PER_PAGE } from '../../constants/queries';
+import { TEAM_MEMBERS_LIST_VIEW_TAKE, TEAM_MEMBERS_LIST_VIEW_TAKE_DATA_PER_PAGE } from '../../constants/queries';
+import { useTeamMembers } from '../../hooks/queries/use-team-members';
 import { getInitials } from '@/library/utils';
 
-import { useMembers } from '../../hooks/queries/use-members';
-import DataNotFoundCard from '@/components/errors/data-notfound';
-
 export const TableData = () => {
-  const { data, status, error, refetch } = useMembers();
+  const { data, status, error, refetch } = useTeamMembers();
 
   if (status === 'pending') return <MembersTableSkeleton />;
 
@@ -104,8 +102,8 @@ export const TableData = () => {
               className="p-1"
               hasMore={data.hasMore}
               page_count={data.page_count}
-              default_take={MEMBERS_LIST_VIEW_TAKE}
-              per_page_counts={MEMBERS_LIST_VIEW_TAKE_DATA_PER_PAGE}
+              default_take={TEAM_MEMBERS_LIST_VIEW_TAKE}
+              per_page_counts={TEAM_MEMBERS_LIST_VIEW_TAKE_DATA_PER_PAGE}
             />
           </TableCell>
         </TableRow>
