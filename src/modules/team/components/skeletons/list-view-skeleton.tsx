@@ -1,6 +1,7 @@
-import { Skeleton } from '@/components/ui/skeleton';
-import { TableCell, TableRow } from '@/components/ui/table';
 import { Fragment } from 'react';
+
+import { TableCell, TableRow } from '@/components/ui/table';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface MembersTableSkeletonProps {
   rowCount?: number;

@@ -143,6 +143,7 @@ model Project {
   id          String         @id @default(uuid())
   name        String
   description String?
+  type        String
   status      project_status @default(active)
 
   start_date DateTime

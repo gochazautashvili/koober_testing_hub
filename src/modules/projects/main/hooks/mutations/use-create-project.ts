@@ -1,24 +1,23 @@
-'use client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { membersQueryKey } from '../queries/use-members';
-import { remove_member } from '../../services/actions';
-
-import { MEMBERS_GRID_VIEW_TAKE, MEMBERS_LIST_VIEW_TAKE } from '../../constants/queries';
 import { usePaginatedQueryParams } from '@/hooks/helpers/use-paginated-query-params';
+import { create_project } from '../../services/actions';
 
-export const useRemoveMember = () => {
+import { PROJECTS_GRID_VIEW_TAKE, PROJECTS_LIST_VIEW_TAKE } from '../../constants/queries';
+import { projectsQueryKey } from '../queries/use-projects';
+
+export const useCreateProject = () => {
   const queryParams = usePaginatedQueryParams({
-    GRID_TAKE: MEMBERS_GRID_VIEW_TAKE,
-    LIST_TAKE: MEMBERS_LIST_VIEW_TAKE,
+    GRID_TAKE: PROJECTS_GRID_VIEW_TAKE,
+    LIST_TAKE: PROJECTS_LIST_VIEW_TAKE,
   });
 
-  const queryKey = membersQueryKey(queryParams);
+  const queryKey = projectsQueryKey(queryParams);
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: remove_member,
+    mutationFn: create_project,
     onSuccess: async ({ message }) => {
       await queryClient.cancelQueries({ queryKey });
 

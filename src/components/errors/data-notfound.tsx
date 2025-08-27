@@ -11,7 +11,7 @@ interface IProps {
   onRefresh?: () => void;
 }
 
-export default function DataNotFoundCard(props: IProps) {
+export const DataNotFoundCard = (props: IProps) => {
   const {
     onRefresh,
     className,
@@ -40,4 +40,4 @@ export default function DataNotFoundCard(props: IProps) {
       </CardContent>
     </Card>
   );
-}
+};

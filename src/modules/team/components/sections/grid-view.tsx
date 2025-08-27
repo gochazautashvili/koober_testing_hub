@@ -10,7 +10,7 @@ import DataNotFoundCard from '@/components/errors/data-notfound';
 import { ErrorAlert } from '@/components/errors/error-alert';
 
 import { Pagination } from '@/components/common/pagination';
-import { ActionsButton } from './actions-button';
+import { ActionsButton } from '../common/actions-button';
 
 import { MEMBERS_GRID_VIEW_TAKE, MEMBERS_GRID_VIEW_TAKE_DATA_PER_PAGE } from '../../constants/queries';
 import { getInitials } from '@/library/utils';

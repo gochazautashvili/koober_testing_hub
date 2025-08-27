@@ -56,9 +56,9 @@ export const Pagination = ({ hasMore, page_count, className, default_take, per_p
             <SelectValue placeholder="Select number of results" />
           </SelectTrigger>
           <SelectContent className="[&_*[role=option]]:ps-2 [&_*[role=option]]:pe-8 [&_*[role=option]>span]:start-auto [&_*[role=option]>span]:end-2">
-            {takePerPages.map((take) => (
-              <SelectItem key={take} value={take.toString()}>
-                {take}
+            {takePerPages.map((item) => (
+              <SelectItem key={item} value={item.toString()}>
+                {item}
               </SelectItem>
             ))}
           </SelectContent>
@@ -71,9 +71,9 @@ export const Pagination = ({ hasMore, page_count, className, default_take, per_p
             <PaginationPrevious />
           </PaginationItem>
 
-          {visiblePages.map((page) => (
-            <PaginationItem key={page}>
-              <PaginationLink>{page}</PaginationLink>
+          {visiblePages.map((item) => (
+            <PaginationItem key={item}>
+              <PaginationLink className={item === page ? 'bg-primary' : ''}>{item}</PaginationLink>
             </PaginationItem>
           ))}
 

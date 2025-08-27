@@ -1,5 +1,5 @@
 'use client';
-import { Grid3X3, List, Plus } from 'lucide-react';
+import { Grid3X3, List } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 
@@ -36,12 +36,7 @@ export const Header = () => {
           </Button>
         </div>
 
-        <CreateProjectModal>
-          <Button>
-            <Plus className="mr-2 h-4 w-4" />
-            New Project
-          </Button>
-        </CreateProjectModal>
+        <CreateProjectModal />
       </div>
     </div>
   );

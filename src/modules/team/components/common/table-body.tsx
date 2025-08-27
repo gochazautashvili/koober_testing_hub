@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 
-import MembersTableSkeleton from '../skeletons/list-view.skeleton';
+import MembersTableSkeleton from '../skeletons/list-view-skeleton';
 import { ErrorAlert } from '@/components/errors/error-alert';
 import { Pagination } from '@/components/common/pagination';
 import { ActionsButton } from './actions-button';
@@ -15,6 +15,7 @@ import { MEMBERS_LIST_VIEW_TAKE, MEMBERS_LIST_VIEW_TAKE_DATA_PER_PAGE } from '..
 import { getInitials } from '@/library/utils';
 
 import { useMembers } from '../../hooks/queries/use-members';
+import DataNotFoundCard from '@/components/errors/data-notfound';
 
 export const TableData = () => {
   const { data, status, error, refetch } = useMembers();
@@ -26,6 +27,16 @@ export const TableData = () => {
       <TableRow>
         <TableCell colSpan={8}>
           <ErrorAlert error={error} onRetry={refetch} />
+        </TableCell>
+      </TableRow>
+    );
+  }
+
+  if (data.members.length === 0) {
+    return (
+      <TableRow>
+        <TableCell colSpan={8}>
+          <DataNotFoundCard onRefresh={refetch} />;
         </TableCell>
       </TableRow>
     );
@@ -86,17 +97,19 @@ export const TableData = () => {
         </TableRow>
       ))}
 
-      <TableRow>
-        <TableCell colSpan={8}>
-          <Pagination
-            className="p-1"
-            hasMore={data.hasMore}
-            page_count={data.page_count}
-            default_take={MEMBERS_LIST_VIEW_TAKE}
-            per_page_counts={MEMBERS_LIST_VIEW_TAKE_DATA_PER_PAGE}
-          />
-        </TableCell>
-      </TableRow>
+      {data.page_count > 1 && (
+        <TableRow>
+          <TableCell colSpan={8}>
+            <Pagination
+              className="p-1"
+              hasMore={data.hasMore}
+              page_count={data.page_count}
+              default_take={MEMBERS_LIST_VIEW_TAKE}
+              per_page_counts={MEMBERS_LIST_VIEW_TAKE_DATA_PER_PAGE}
+            />
+          </TableCell>
+        </TableRow>
+      )}
     </Fragment>
   );
 };

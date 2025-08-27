@@ -4,11 +4,11 @@ import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
-import { TableData } from './table-body';
+import { TableData } from '../common/table-body';
 
 export const ListView = () => {
   return (
-    <Card className="pt-2 pb-0">
+    <Card className="py-2">
       <Table>
         <TableHeader>
           <TableRow>

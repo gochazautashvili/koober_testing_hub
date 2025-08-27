@@ -15,3 +15,7 @@ export function getInitials(name: string): string {
     .map((word) => word.charAt(0).toUpperCase())
     .join('');
 }
+
+export function getFullProfession(value: string[]) {
+  return value.join(', ');
+}
