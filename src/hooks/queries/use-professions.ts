@@ -1,12 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 
-import { IProfessionResponse } from '@/app/api/professions/services/models';
+import { errors } from '@/constants';
+import { client } from '@/library';
 
 const getData = async () => {
-  const res = await axios.get<IProfessionResponse[]>('/api/professions');
+  const res = await client.api.global.professions.$get();
 
-  return res.data;
+  if (!res.ok) throw new Error(errors.server_error);
+
+  return res.json();
 };
 
 export const professionsQueryKey = ['professions'];

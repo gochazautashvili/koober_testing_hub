@@ -2,7 +2,7 @@
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 
-import { lucia } from './index';
+import { lucia } from './auth';
 
 export const logout = async () => {
   const sessionId = (await cookies()).get(lucia.sessionCookieName)?.value ?? null;

@@ -28,7 +28,7 @@ interface IProps {
   onOpenChange: (open: boolean) => void;
 }
 
-export default function EditMemberRoleDialog({ memberId, role, username, email, onOpenChange }: IProps) {
+export const EditMemberRoleDialog = ({ memberId, role, username, email, onOpenChange }: IProps) => {
   const [selectedRole, setSelectedRole] = useState<user_role>(role);
   const { mutate, isPending } = useEditMemberRole();
 
@@ -92,4 +92,4 @@ export default function EditMemberRoleDialog({ memberId, role, username, email, 
       </DialogContent>
     </Dialog>
   );
-}
+};

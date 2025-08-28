@@ -1,16 +1,19 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 
-import { PROJECTS_GRID_VIEW_TAKE, PROJECTS_LIST_VIEW_TAKE } from '../../constants/queries';
+import { project_query_schema } from '@/modules/projects/main/server/validations/get.validations';
 import { usePaginatedQueryParams } from '@/hooks/helpers/use-paginated-query-params';
-import { project_query_schema } from '@/app/api/projects/services/validations';
-import { IProjectsResponse } from '@/app/api/projects/services/models';
+import { PROJECTS_GRID_VIEW_TAKE, PROJECTS_LIST_VIEW_TAKE } from '../../constants';
 
-const getData = async (params: Record<string, string>) => {
-  const res = await axios.get<IProjectsResponse>('/api/projects', { params });
+import { errors } from '@/constants';
+import { client } from '@/library';
 
-  return res.data;
+const getData = async (query: Record<string, string>) => {
+  const res = await client.api.projects.filter.$get({ query });
+
+  if (!res.ok) throw new Error(errors.server_error);
+
+  return res.json();
 };
 
 export const projectsQueryKey = (params: Record<string, string>) => {

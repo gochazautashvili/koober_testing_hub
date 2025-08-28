@@ -23,14 +23,14 @@ import { Calendar } from '@/components/ui/calendar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-import { LoadingButton } from '@/components/common/loading-button';
+import { LoadingButton } from '@/components/common';
+import { TeamMembers } from '../common';
 
 import { IProjectValues, project_schema } from '../../services/validations';
 import { projectTypes } from '../../constants';
 import { cn } from '@/library/utils';
 
 import { useCreateProject } from '../../hooks/mutations/use-create-project';
-import { TeamMembers } from '../common/team-members';
 
 export function CreateProjectModal() {
   const { mutate, isPending } = useCreateProject();
