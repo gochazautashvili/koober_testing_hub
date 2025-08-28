@@ -1,4 +1,4 @@
-import { IProjectSelector } from './selectors';
+import { IProjectSelector } from '../selectors/get.selectors';
 
 export interface IProjectsResponse {
   hasMore: boolean;

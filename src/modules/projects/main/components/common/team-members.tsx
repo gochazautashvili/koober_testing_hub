@@ -5,10 +5,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 
-import { MemberListSkeleton } from '../skeletons/members-list-skeleton';
+import { MemberListSkeleton } from '../skeletons';
 import { ErrorAlert } from '@/components/errors';
 
-import { cn, getFullProfession, getInitials } from '@/library/utils';
+import { cn, getFullProfession, getInitials } from '@/library';
 import { useMembers } from '@/hooks/queries/use-members';
 
 interface ITeamMembersProps {

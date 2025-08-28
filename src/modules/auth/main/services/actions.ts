@@ -7,7 +7,7 @@ import { IForgotPasswordValues, ILoginSchema, login_schema } from './validations
 import { sendEmail } from '@/library/smtp';
 import { IActionResponse } from '@/types';
 import { db } from '@/library/database';
-import { lucia } from '@/auth';
+import { lucia } from '@/auth/auth';
 import PasswordResetEmail from '@/emails/password-reset-email';
 import { env } from '@/helpers/env';
 import { createToken } from '../../shared/helpers';

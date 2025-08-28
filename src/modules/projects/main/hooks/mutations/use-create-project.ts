@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import { usePaginatedQueryParams } from '@/hooks/helpers/use-paginated-query-params';
 import { create_project } from '../../services/actions';
 
-import { PROJECTS_GRID_VIEW_TAKE, PROJECTS_LIST_VIEW_TAKE } from '../../constants/queries';
+import { PROJECTS_GRID_VIEW_TAKE, PROJECTS_LIST_VIEW_TAKE } from '../../constants';
 import { projectsQueryKey } from '../queries/use-projects';
 
 export const useCreateProject = () => {

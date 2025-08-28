@@ -4,14 +4,13 @@ import { Fragment } from 'react';
 import { TableCell, TableRow } from '@/components/ui/table';
 
 import { DataNotFoundCard, ErrorAlert } from '@/components/errors';
-import { Pagination } from '@/components/common';
+import { Pagination, MemberAvatarCard } from '@/components/common';
 import { ActionsButton } from '../common';
 
 import { useProjects } from '../../hooks/queries/use-projects';
 
-import { PROJECTS_GRID_VIEW_TAKE, PROJECTS_GRID_VIEW_TAKE_DATA_PER_PAGE } from '../../constants/queries';
-import { ProjectTableSkeleton } from '../skeletons/projects-list-skeleton';
-import { MemberAvatarCard } from '@/components/common';
+import { PROJECTS_GRID_VIEW_TAKE, PROJECTS_GRID_VIEW_TAKE_DATA_PER_PAGE } from '../../constants';
+import { ProjectTableSkeleton } from '../skeletons';
 
 function getStatusDotColor(status: string) {
   switch (status) {

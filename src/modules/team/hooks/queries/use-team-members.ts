@@ -1,17 +1,19 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 
-import { member_query_schema } from '@/app/api/team/members/services/validations';
-import { IMembersResponse } from '@/app/api/team/members/services/models';
-
-import { TEAM_MEMBERS_GRID_VIEW_TAKE, TEAM_MEMBERS_LIST_VIEW_TAKE } from '../../constants/queries';
+import { TEAM_MEMBERS_GRID_VIEW_TAKE, TEAM_MEMBERS_LIST_VIEW_TAKE } from '../../constants';
 import { usePaginatedQueryParams } from '@/hooks/helpers/use-paginated-query-params';
+import { member_query_schema } from '../../server/validations/get.validations';
+
+import { errors } from '@/constants';
+import { client } from '@/library';
 
 const getData = async (params: Record<string, string>) => {
-  const res = await axios.get<IMembersResponse>('/api/team/members', { params });
+  const res = await client.api.team.members.$get({ query: params });
 
-  return res.data;
+  if (!res.ok) throw new Error(errors.server_error);
+
+  return await res.json();
 };
 
 export const teamMembersQueryKey = (params: Record<string, string>) => {

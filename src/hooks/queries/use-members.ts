@@ -1,13 +1,15 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 
-import { IMembersResponse } from '@/app/api/members/services/types';
+import { errors } from '@/constants';
+import { client } from '@/library';
 
 const getData = async () => {
-  const res = await axios.get<IMembersResponse>('/api/members');
+  const res = await client.api.global.members.$get();
 
-  return res.data;
+  if (!res.ok) throw new Error(errors.server_error);
+
+  return res.json();
 };
 
 export const membersQueryKey = () => {

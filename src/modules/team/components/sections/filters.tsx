@@ -4,7 +4,6 @@ import { Search } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 
-import { filter_member_status } from '@/app/api/team/members/services/validations';
 import { useTeamMemberFilters } from '../../hooks/search/use-member-filters';
 import { ProfessionsSelector } from '@/components/data';
 
@@ -31,17 +30,6 @@ export const Filters = () => {
           <SelectContent>
             <SelectItem value="all">All professions</SelectItem>
             <ProfessionsSelector />
-          </SelectContent>
-        </Select>
-
-        <Select onValueChange={(e) => setSearch({ status: e })} defaultValue={filter_member_status.ALL}>
-          <SelectTrigger className="w-32">
-            <SelectValue placeholder="Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value={filter_member_status.ALL}>All Status</SelectItem>
-            <SelectItem value={filter_member_status.ACTIVE}>Active</SelectItem>
-            <SelectItem value={filter_member_status.INACTIVE}>Inactive</SelectItem>
           </SelectContent>
         </Select>
       </div>

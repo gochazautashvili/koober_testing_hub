@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { cache } from 'react';
 
 import { user_role } from '@/generated/prisma/prisma';
-import { lucia } from './index';
+import { lucia } from './auth';
 
 // Current user-ის მოძებნა (cached)
 export const getAuth = cache(async () => {

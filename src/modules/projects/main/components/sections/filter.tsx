@@ -41,11 +41,11 @@ export const Filter = () => {
           defaultValue={filter.status || 'all'}
           onValueChange={(status) => setFilter({ status: status !== 'all' ? status : null })}
         >
-          <SelectTrigger className="w-32">
+          <SelectTrigger>
             <SelectValue placeholder="Filter" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All</SelectItem>
+            <SelectItem value="all">Filter by status</SelectItem>
             {project_statuses.map((item) => (
               <SelectItem className="capitalize" key={item} value={item}>
                 {item}
@@ -57,11 +57,11 @@ export const Filter = () => {
           defaultValue={filter.member || 'all'}
           onValueChange={(member) => setFilter({ member: member !== 'all' ? member : null })}
         >
-          <SelectTrigger className="w-32">
+          <SelectTrigger>
             <SelectValue placeholder="Filter" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All</SelectItem>
+            <SelectItem value="all">Filter by members</SelectItem>
             <MembersSelector />
           </SelectContent>
         </Select>

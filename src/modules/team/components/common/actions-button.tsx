@@ -11,8 +11,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 
-import { ConfirmAlertDialog } from '@/components/dialogs/confirm-alert-dialog';
-import EditMemberRoleDialog from '../dialogs/edit-member-role-dialog';
+import { ConfirmAlertDialog } from '@/components/dialogs';
+import {EditMemberRoleDialog} from '../dialogs';
 
 import { useRemoveMember } from '../../hooks/mutations/use-remove-member';
 
